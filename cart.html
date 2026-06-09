@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Basket | 91GI</title>
+  <link rel="icon" type="image/png" href="91GI_logo.png" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .full-cart-layout {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 60px;
+      padding: 40px 0 100px;
+    }
+    .full-cart-items { background: var(--paper); border-radius: var(--radius-lg); border: 1px solid var(--line); padding: 32px; }
+    .full-cart-items h2 { font-size: 24px; margin-bottom: 8px; font-weight: 500; }
+    .full-cart-items .sub { color: var(--mute); font-size: 14px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+    .full-cart-item {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 24px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: center;
+    }
+    .full-cart-item:last-child { border-bottom: none; }
+    .full-cart-item-img { aspect-ratio: 1; border-radius: var(--radius); overflow: hidden; background: var(--cream-deep); position: relative; }
+    .full-cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
+    .full-cart-item-name {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      color: var(--forest-deep);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .full-cart-item-region {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mute);
+      margin-bottom: 14px;
+    }
+    .full-cart-item-bottom {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .full-cart-item-price {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      color: var(--forest-deep);
+      font-weight: 500;
+      text-align: right;
+      min-width: 120px;
+    }
+    .full-cart-item-remove {
+      font-size: 12px;
+      color: var(--mute);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .full-cart-item-remove:hover { color: var(--vermillion); }
+    @media (max-width: 900px) {
+      .full-cart-layout { grid-template-columns: 1fr; gap: 28px; }
+      .full-cart-item { grid-template-columns: 80px 1fr; }
+      .full-cart-item-price { grid-column: span 2; text-align: left; min-width: 0; }
+    }
+  </style>
+</head>
+<body data-page="cart">
+
+  <div id="navMount"></div>
+
+  <section class="shop-hero" style="padding: 60px 0 40px;">
+    <div class="container">
+      <span class="eyebrow">Step 1 of 2</span>
+      <h1>Your <em style="font-family: var(--font-display); font-style: italic; color: var(--gold-soft); font-weight: 400;">Basket</em></h1>
+      <p>Review what's in. Adjust quantities. Proceed when ready.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="full-cart-layout" id="fullCartLayout">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <div id="footerMount"></div>
+
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    function renderFullCart() {
+      const layout = document.getElementById('fullCartLayout');
+      const items = Cart.get();
+
+      if (items.length === 0) {
+        layout.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 80px 20px; background: var(--paper); border-radius: var(--radius-lg); border: 1px solid var(--line);">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="color: var(--mute); margin: 0 auto 20px;">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            <h2 style="font-size: 28px; margin-bottom: 12px; font-weight: 500;">Your basket is empty</h2>
+            <p style="color: var(--mute); margin-bottom: 28px; max-width: 360px; margin-left: auto; margin-right: auto;">Start with a small-batch heritage product — Kashmir saffron, Mithila makhana, or something from your home state.</p>
+            <a href="shop.html" class="btn btn-primary">Discover GI Products</a>
+          </div>
+        `;
+        return;
+      }
+
+      layout.innerHTML = `
+        <div class="full-cart-items">
+          <h2>${items.length} ${items.length === 1 ? 'item' : 'items'} in your basket</h2>
+          <p class="sub">Take a moment — each line comes from a different region of India.</p>
+          ${items.map(item => {
+            const p = getProductById(item.id);
+            if (!p) return '';
+            return `
+              <div class="full-cart-item">
+                <div class="full-cart-item-img">
+                  ${styledProductImage(p)}
+                </div>
+                <div>
+                  <a href="product.html?id=${p.id}" style="color: inherit;">
+                    <div class="full-cart-item-name">${p.name}</div>
+                  </a>
+                  <div class="full-cart-item-region">${p.region} · ${p.state} · ${p.unit}</div>
+                  <div class="full-cart-item-bottom">
+                    <div class="qty-control" style="border-radius: 999px;">
+                      <button class="qty-btn" style="height: 44px; width: 38px; font-size: 18px;" onclick="Cart.updateQty('${p.id}', ${item.qty - 1}); renderFullCart();">−</button>
+                      <span class="qty-display">${item.qty}</span>
+                      <button class="qty-btn" style="height: 44px; width: 38px; font-size: 18px;" onclick="Cart.updateQty('${p.id}', ${item.qty + 1}); renderFullCart();">+</button>
+                    </div>
+                    <a class="full-cart-item-remove" onclick="Cart.remove('${p.id}'); renderFullCart();">Remove</a>
+                  </div>
+                </div>
+                <div class="full-cart-item-price">₹${(p.price * item.qty).toLocaleString('en-IN')}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+        <div class="order-summary">
+          <h3>Order Summary</h3>
+          <div class="summary-totals">
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>₹${Cart.getSubtotal().toLocaleString('en-IN')}</span>
+            </div>
+            ${Cart.getMRPSavings() > 0 ? `
+            <div class="summary-row" style="color: var(--vermillion);">
+              <span>You save</span>
+              <span>− ₹${Cart.getMRPSavings().toLocaleString('en-IN')}</span>
+            </div>` : ''}
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span>${Cart.getShipping() === 0 ? '<strong style="color: var(--forest); font-weight: 500;">Free</strong>' : '₹' + Cart.getShipping()}</span>
+            </div>
+            ${Cart.getShipping() > 0 ? `
+            <div style="background: var(--cream-soft); padding: 10px 14px; border-radius: var(--radius); font-size: 12px; color: var(--mute); margin-top: 12px; line-height: 1.5;">
+              Add ₹${(999 - Cart.getSubtotal()).toLocaleString('en-IN')} more to unlock free shipping.
+            </div>` : ''}
+            <div class="summary-row grand">
+              <span>Total</span>
+              <span>₹${Cart.getTotal().toLocaleString('en-IN')}</span>
+            </div>
+          </div>
+          <a href="checkout.html" class="btn btn-primary btn-block" style="margin-top: 24px;">Proceed to Checkout →</a>
+          <a href="shop.html" class="btn btn-ghost btn-block" style="margin-top: 10px;">Continue Shopping</a>
+
+          <div style="margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 12px; color: var(--mute); line-height: 1.7;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--forest);">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Secure checkout with end-to-end encryption
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--forest);">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              Easy returns within 7 days
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Keep the full cart page in sync when the cart drawer edits the basket.
+    window.onCartChange = renderFullCart;
+    document.addEventListener('DOMContentLoaded', renderFullCart);
+  </script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout | 91GI</title>
+  <link rel="icon" type="image/png" href="91GI_logo.png" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body data-page="checkout">
+
+  <div id="navMount"></div>
+
+  <section class="shop-hero" style="padding: 60px 0 40px;">
+    <div class="container">
+      <span class="eyebrow">Step 2 of 2</span>
+      <h1><em style="font-family: var(--font-display); font-style: italic; color: var(--gold-soft); font-weight: 400;">Almost</em> there</h1>
+      <p>A few details, and your order will be on its way from the soil it came from.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="checkout-layout" id="checkoutLayout">
+      <form class="checkout-form" id="checkoutForm" onsubmit="placeOrder(event)">
+        <h2>Delivery Details</h2>
+        <span class="form-eyebrow">Where should we ship your order?</span>
+
+        <div class="form-section">
+          <div class="form-section-title">Contact</div>
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label" for="firstName">First name</label>
+              <input type="text" id="firstName" name="firstName" class="form-input" autocomplete="given-name" required />
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="lastName">Last name</label>
+              <input type="text" id="lastName" name="lastName" class="form-input" autocomplete="family-name" required />
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-input" autocomplete="email" required placeholder="you@email.com" />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" class="form-input" autocomplete="tel" required placeholder="+91 98XXX XXXXX" />
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">Address</div>
+          <div class="form-field">
+            <label class="form-label" for="street">Street address</label>
+            <input type="text" id="street" name="street" class="form-input" autocomplete="address-line1" required placeholder="House no., street, locality" />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="apartment">Apartment / floor (optional)</label>
+            <input type="text" id="apartment" name="apartment" class="form-input" autocomplete="address-line2" />
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label" for="city">City</label>
+              <input type="text" id="city" name="city" class="form-input" autocomplete="address-level2" required />
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="state">State</label>
+              <select id="state" name="state" class="form-input" autocomplete="address-level1" required>
+                <option value="">Select state</option>
+                <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
+                <option>Bihar</option><option>Chhattisgarh</option><option>Delhi</option>
+                <option>Goa</option><option>Gujarat</option><option>Haryana</option>
+                <option>Himachal Pradesh</option><option>Jammu & Kashmir</option><option>Jharkhand</option>
+                <option>Karnataka</option><option>Kerala</option><option>Ladakh</option>
+                <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option>
+                <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
+                <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+                <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
+                <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
+                <option>West Bengal</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label" for="pin">PIN code</label>
+              <input type="text" id="pin" name="pin" class="form-input" inputmode="numeric" autocomplete="postal-code" required pattern="[0-9]{6}" maxlength="6" placeholder="6-digit PIN" />
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="country">Country</label>
+              <input type="text" id="country" name="country" class="form-input" value="India" disabled />
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="deliveryNotes">Delivery notes (optional)</label>
+            <textarea id="deliveryNotes" name="deliveryNotes" class="form-input" placeholder="Any special instructions for our delivery partner?"></textarea>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">Payment</div>
+          <div class="payment-options">
+            <label class="payment-option selected" onclick="selectPayment(this)">
+              <input type="radio" name="payment" value="upi" checked />
+              <div class="payment-option-text">
+                <div class="payment-option-title">UPI</div>
+                <div class="payment-option-sub">PhonePe, GPay, Paytm, BHIM</div>
+              </div>
+            </label>
+            <label class="payment-option" onclick="selectPayment(this)">
+              <input type="radio" name="payment" value="card" />
+              <div class="payment-option-text">
+                <div class="payment-option-title">Credit / Debit Card</div>
+                <div class="payment-option-sub">Visa, Mastercard, RuPay, Amex</div>
+              </div>
+            </label>
+            <label class="payment-option" onclick="selectPayment(this)">
+              <input type="radio" name="payment" value="netbanking" />
+              <div class="payment-option-text">
+                <div class="payment-option-title">Netbanking</div>
+                <div class="payment-option-sub">All major Indian banks</div>
+              </div>
+            </label>
+            <label class="payment-option" onclick="selectPayment(this)">
+              <input type="radio" name="payment" value="cod" />
+              <div class="payment-option-text">
+                <div class="payment-option-title">Cash on Delivery</div>
+                <div class="payment-option-sub">Pay when your order arrives (₹49 extra)</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top: 16px;">
+          Place Order — ₹<span id="totalBtn">0</span>
+        </button>
+
+        <p style="text-align: center; font-size: 12px; color: var(--mute); margin-top: 16px; line-height: 1.6;">
+          By placing this order, you agree to 91GI's <a href="#" style="text-decoration: underline;">Terms</a>
+          and <a href="#" style="text-decoration: underline;">Privacy Policy</a>.
+        </p>
+      </form>
+
+      <aside class="order-summary" id="orderSummary">
+        <!-- populated by JS -->
+      </aside>
+    </div>
+  </div>
+
+  <!-- Success modal -->
+  <div id="successModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 31, 23, 0.7); z-index: 300; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: var(--cream); border-radius: 16px; padding: 60px 40px; max-width: 480px; width: 100%; text-align: center; box-shadow: var(--shadow-xl);">
+      <div style="width: 80px; height: 80px; background: var(--forest); border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--cream)" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h2 style="font-size: 32px; margin-bottom: 12px; font-weight: 500;">Thank you.</h2>
+      <p style="font-family: var(--font-display); font-style: italic; font-size: 20px; color: var(--vermillion); margin-bottom: 24px;">
+        Your order is on its way.
+      </p>
+      <p style="color: var(--mute); margin-bottom: 32px; line-height: 1.7;">
+        We've sent a confirmation to your email. Each product will be packed and shipped from its GI region —
+        which means some orders ship in multiple parcels. We'll keep you updated at every step.
+      </p>
+      <a href="index.html" class="btn btn-primary">Back to Home</a>
+    </div>
+  </div>
+
+  <div id="footerMount"></div>
+
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    function selectPayment(el) {
+      document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      el.querySelector('input').checked = true;
+      renderSummary();
+    }
+
+    function renderSummary() {
+      const items = Cart.get();
+      const summary = document.getElementById('orderSummary');
+      if (items.length === 0) {
+        summary.innerHTML = `
+          <h3>Your basket is empty</h3>
+          <p style="color: var(--mute); margin: 12px 0 24px;">Add a product first.</p>
+          <a href="shop.html" class="btn btn-primary btn-block">Browse Products</a>
+        `;
+        document.getElementById('checkoutForm').style.display = 'none';
+        return;
+      }
+
+      const codSelected = document.querySelector('input[name="payment"]:checked')?.value === 'cod';
+      const codFee = codSelected ? 49 : 0;
+      const finalTotal = Cart.getTotal() + codFee;
+
+      summary.innerHTML = `
+        <h3>Your Order</h3>
+        ${items.map(item => {
+          const p = getProductById(item.id);
+          if (!p) return '';
+          return `
+            <div class="summary-item">
+              <div class="summary-item-img">
+                ${styledProductImage(p)}
+              </div>
+              <div class="summary-item-info">
+                <strong>${p.name}</strong>
+                <span>${p.region} · ${p.unit} · Qty ${item.qty}</span>
+              </div>
+              <div class="summary-item-price">₹${(p.price * item.qty).toLocaleString('en-IN')}</div>
+            </div>
+          `;
+        }).join('')}
+
+        <div class="summary-totals">
+          <div class="summary-row"><span>Subtotal</span><span>₹${Cart.getSubtotal().toLocaleString('en-IN')}</span></div>
+          ${Cart.getMRPSavings() > 0 ? `
+          <div class="summary-row" style="color: var(--vermillion);">
+            <span>MRP savings</span>
+            <span>− ₹${Cart.getMRPSavings().toLocaleString('en-IN')}</span>
+          </div>` : ''}
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span>${Cart.getShipping() === 0 ? '<strong style="color: var(--forest); font-weight: 500;">Free</strong>' : '₹' + Cart.getShipping()}</span>
+          </div>
+          ${codSelected ? `<div class="summary-row"><span>COD fee</span><span>₹49</span></div>` : ''}
+          <div class="summary-row grand"><span>Total</span><span>₹${finalTotal.toLocaleString('en-IN')}</span></div>
+        </div>
+      `;
+
+      document.getElementById('totalBtn').textContent = finalTotal.toLocaleString('en-IN');
+    }
+
+    function placeOrder(e) {
+      e.preventDefault();
+      // Never let an empty basket be "ordered" (e.g. if all items were removed via the drawer).
+      if (Cart.get().length === 0) {
+        renderSummary();
+        showToast('Your basket is empty');
+        return;
+      }
+      // Show success modal, clear cart
+      document.getElementById('successModal').style.display = 'flex';
+      Cart.clear();
+      // Optional: redirect after a few seconds
+      setTimeout(() => {
+        // window.location.href = 'index.html';
+      }, 5000);
+    }
+
+    // Keep the order summary + Place Order total in sync when the cart drawer edits the basket.
+    window.onCartChange = renderSummary;
+    document.addEventListener('DOMContentLoaded', renderSummary);
+  </script>
+</body>
+</html>

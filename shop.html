@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop All GI Products | 91GI</title>
+  <meta name="description" content="Browse all 60+ authentic Geographical Indication products of India. Filter by state, category, and price." />
+  <link rel="icon" type="image/png" href="91GI_logo.png" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body data-page="shop">
+
+  <div id="navMount"></div>
+
+  <!-- SHOP HERO -->
+  <section class="shop-hero">
+    <div class="container">
+      <span class="eyebrow">The Full Marketplace</span>
+      <h1 id="shopTitle">Shop All <em style="font-family: var(--font-display); font-style: italic; color: var(--gold-soft); font-weight: 400;">GI Products</em></h1>
+      <p id="shopSubtitle">Sixty-plus heritage products from across India — origin-verified, hand-picked, GI-protected.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="shop-layout">
+
+      <!-- Mobile filter backdrop -->
+      <div class="shop-overlay" id="shopOverlay" onclick="closeShopFilters()"></div>
+
+      <!-- SIDEBAR FILTERS -->
+      <aside class="shop-sidebar" id="shopSidebar">
+        <button class="shop-sidebar-close" onclick="closeShopFilters()" aria-label="Close filters">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+          <h3 style="font-family: var(--font-serif); font-size: 22px; font-weight: 500;">Filter</h3>
+          <button class="filter-clear" onclick="clearAllFilters()">Clear All</button>
+        </div>
+
+        <!-- Search -->
+        <div class="filter-group">
+          <div class="filter-title">Search</div>
+          <input type="search" id="searchInput" placeholder="Try 'saffron'..." class="form-input" style="font-size: 14px; padding: 11px 14px;" oninput="applyFilters()" />
+        </div>
+
+        <!-- Categories -->
+        <div class="filter-group">
+          <div class="filter-title">Category</div>
+          <ul class="filter-list" id="categoryFilters"></ul>
+        </div>
+
+        <!-- States -->
+        <div class="filter-group">
+          <div class="filter-title">By State</div>
+          <ul class="filter-list" id="stateFilters"></ul>
+        </div>
+
+        <!-- Price -->
+        <div class="filter-group">
+          <div class="filter-title">Price</div>
+          <ul class="filter-list">
+            <li class="filter-item">
+              <input type="checkbox" id="price-1" value="0-300" onchange="applyFilters()" />
+              <label for="price-1">Under ₹300</label>
+            </li>
+            <li class="filter-item">
+              <input type="checkbox" id="price-2" value="300-600" onchange="applyFilters()" />
+              <label for="price-2">₹300 – ₹600</label>
+            </li>
+            <li class="filter-item">
+              <input type="checkbox" id="price-3" value="600-1000" onchange="applyFilters()" />
+              <label for="price-3">₹600 – ₹1,000</label>
+            </li>
+            <li class="filter-item">
+              <input type="checkbox" id="price-4" value="1000-99999" onchange="applyFilters()" />
+              <label for="price-4">Above ₹1,000</label>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Mobile-only: apply & close -->
+        <button class="shop-sidebar-apply btn btn-primary btn-block" onclick="closeShopFilters()">Show Results</button>
+      </aside>
+
+      <!-- MAIN PRODUCTS -->
+      <main class="shop-main">
+        <div class="shop-toolbar">
+          <div class="shop-count">
+            <button class="filter-toggle" onclick="openShopFilters()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+              </svg>
+              Filters
+            </button>
+            <span id="shopCount" style="margin-left: 14px;">Showing <strong>0</strong> products</span>
+          </div>
+          <div class="shop-sort">
+            <label for="sortBy">Sort:</label>
+            <select id="sortBy" onchange="applyFilters()">
+              <option value="featured">Featured</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="name-asc">Name: A–Z</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+      </main>
+    </div>
+  </div>
+
+  <div id="footerMount"></div>
+
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    let activeFilters = {
+      categories: new Set(),
+      states: new Set(),
+      prices: new Set(),
+      search: ''
+    };
+
+    function buildFilterUI() {
+      // Categories
+      const categories = getAllCategories();
+      document.getElementById('categoryFilters').innerHTML = categories.map(cat => {
+        const count = getProductsByCategory(cat).length;
+        const id = 'cat-' + cat.replace(/[^a-z0-9]/gi, '');
+        return `
+          <li class="filter-item">
+            <input type="checkbox" id="${id}" value="${cat}" data-filter="categories" onchange="applyFilters()" />
+            <label for="${id}">${cat}</label>
+            <span class="filter-item-count">${count}</span>
+          </li>
+        `;
+      }).join('');
+
+      // States
+      const states = getAllStates();
+      document.getElementById('stateFilters').innerHTML = states.map(state => {
+        const count = getProductsByState(state).length;
+        const id = 'state-' + state.replace(/[^a-z0-9]/gi, '');
+        const cleanName = state.replace('India (Andhra Pradesh & Odisha)', 'Araku (AP & Odisha)');
+        return `
+          <li class="filter-item">
+            <input type="checkbox" id="${id}" value="${state}" data-filter="states" onchange="applyFilters()" />
+            <label for="${id}">${cleanName}</label>
+            <span class="filter-item-count">${count}</span>
+          </li>
+        `;
+      }).join('');
+    }
+
+    function applyFilters() {
+      // Re-collect active filters from DOM
+      activeFilters.categories.clear();
+      activeFilters.states.clear();
+      activeFilters.prices.clear();
+      document.querySelectorAll('input[data-filter="categories"]:checked').forEach(el => activeFilters.categories.add(el.value));
+      document.querySelectorAll('input[data-filter="states"]:checked').forEach(el => activeFilters.states.add(el.value));
+      document.querySelectorAll('input[id^="price-"]:checked').forEach(el => activeFilters.prices.add(el.value));
+      activeFilters.search = document.getElementById('searchInput').value.trim().toLowerCase();
+
+      // Filter
+      let results = PRODUCTS.slice();
+      if (activeFilters.categories.size > 0) results = results.filter(p => activeFilters.categories.has(p.category));
+      if (activeFilters.states.size > 0) results = results.filter(p => activeFilters.states.has(p.state));
+      if (activeFilters.prices.size > 0) {
+        results = results.filter(p => {
+          for (const range of activeFilters.prices) {
+            const [min, max] = range.split('-').map(Number);
+            if (p.price >= min && p.price <= max) return true;
+          }
+          return false;
+        });
+      }
+      if (activeFilters.search) {
+        results = results.filter(p =>
+          p.name.toLowerCase().includes(activeFilters.search) ||
+          p.region.toLowerCase().includes(activeFilters.search) ||
+          p.state.toLowerCase().includes(activeFilters.search) ||
+          p.category.toLowerCase().includes(activeFilters.search)
+        );
+      }
+
+      // Sort
+      const sort = document.getElementById('sortBy').value;
+      if (sort === 'price-asc') results.sort((a, b) => a.price - b.price);
+      else if (sort === 'price-desc') results.sort((a, b) => b.price - a.price);
+      else if (sort === 'name-asc') results.sort((a, b) => a.name.localeCompare(b.name));
+      else results.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+
+      // Render
+      renderProductGrid(results, '#productGrid');
+      document.getElementById('shopCount').innerHTML = `Showing <strong>${results.length}</strong> ${results.length === 1 ? 'product' : 'products'}`;
+    }
+
+    function clearAllFilters() {
+      document.querySelectorAll('.shop-sidebar input[type=checkbox]').forEach(el => el.checked = false);
+      document.getElementById('searchInput').value = '';
+      activeFilters.categories.clear();
+      activeFilters.states.clear();
+      activeFilters.prices.clear();
+      activeFilters.search = '';
+      applyFilters();
+    }
+
+    function openShopFilters() {
+      document.getElementById('shopSidebar').classList.add('open');
+      document.getElementById('shopOverlay').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeShopFilters() {
+      document.getElementById('shopSidebar').classList.remove('open');
+      document.getElementById('shopOverlay').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    // Init from URL params
+    document.addEventListener('DOMContentLoaded', () => {
+      buildFilterUI();
+
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get('category');
+      const st = params.get('state');
+
+      if (cat) {
+        const el = document.querySelector(`input[data-filter="categories"][value="${cat}"]`);
+        if (el) {
+          el.checked = true;
+          document.getElementById('shopTitle').innerHTML = cat + ` <em style="font-family: var(--font-display); font-style: italic; color: var(--gold-soft); font-weight: 400;">Collection</em>`;
+          document.getElementById('shopSubtitle').textContent = `Heritage ${cat.toLowerCase()} sourced direct from their GI regions.`;
+        }
+      }
+      if (st) {
+        const el = document.querySelector(`input[data-filter="states"][value="${st}"]`);
+        if (el) {
+          el.checked = true;
+          const cleanState = st.replace(' (UT)', '').replace('India (', '').replace(')', '');
+          document.getElementById('shopTitle').innerHTML = `Made in <em style="font-family: var(--font-display); font-style: italic; color: var(--gold-soft); font-weight: 400;">${cleanState}</em>`;
+          document.getElementById('shopSubtitle').textContent = `GI-tagged heritage products from ${cleanState}.`;
+        }
+      }
+
+      applyFilters();
+    });
+  </script>
+</body>
+</html>

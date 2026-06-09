@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>By State | 91GI</title>
+  <meta name="description" content="Browse GI-tagged products by Indian state — from Kashmir to Kanyakumari, every state's heritage in one place." />
+  <link rel="icon" type="image/png" href="91GI_logo.png" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .region-group {
+      margin-bottom: 60px;
+    }
+    .region-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .region-header h2 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 500;
+    }
+    .region-header h2 em {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--vermillion);
+      font-weight: 400;
+    }
+    .region-line {
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    .state-grid-large {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .state-card-large {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: all 0.3s var(--ease);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .state-card-large::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease);
+    }
+    .state-card-large:hover {
+      border-color: var(--forest);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .state-card-large:hover::before { transform: scaleX(1); }
+    .state-card-large h3 {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: var(--forest-deep);
+    }
+    .state-card-large p {
+      font-size: 13px;
+      color: var(--mute);
+      line-height: 1.5;
+      margin-bottom: 14px;
+      min-height: 36px;
+    }
+    .state-card-large-cta {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--vermillion);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    @media (max-width: 1024px) { .state-grid-large { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 700px) { .state-grid-large { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 460px) { .state-grid-large { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body data-page="states">
+
+  <div id="navMount"></div>
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">A country of soils, hands, and stories</span>
+      <h1>India, <em>state by state.</em></h1>
+      <p>Twenty-two Indian states represented. Each one carries the weight of its rivers, its hills, and the
+      hands that grow what it grows. Pick your homeland — or wander.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div id="regionsContainer"></div>
+    </div>
+  </section>
+
+  <div id="footerMount"></div>
+
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    const STATE_TAGLINES = {
+      'India (Punjab)': 'The basmati belt of the Indo-Gangetic plains.',
+      'Tamil Nadu': 'Seeraga Samba, clove, pepper, coconut — a land of seven heritage products.',
+      'Maharashtra': 'Ambemohar, kokum, raisins, mirchi — eight GI treasures.',
+      'West Bengal': 'Gobindobhog rice — the offering rice of Krishna.',
+      'Madhya Pradesh': "Sharbati wheat — India's sweetest grain.",
+      'Jammu & Kashmir': 'Saffron, walnut, pine nut, kala zeera — six high-altitude wonders.',
+      'Kerala': 'Onattukara sesame and Thalanadan spice — coastal heritage.',
+      'Karnataka': 'Chikmagalur & Coorg coffee, Sirsi supari — five GI products.',
+      'Bihar': 'Mithila Makhana — hand-popped on hot sand.',
+      'Telangana': 'Tandur redgram, Armoor turmeric, Jagtial sesame.',
+      'Meghalaya': "Lakadong turmeric — the world's most potent haldi.",
+      'Odisha': 'Kandhamal tribal-grown turmeric.',
+      'Arunachal Pradesh': 'Smoke-cured Bebo large cardamom.',
+      'Himachal Pradesh': 'Pangi walnut and Himachali Kala Zeera.',
+      'Rajasthan': "Nagori Ashwagandha, Sikar onion, Rajasthan jeera — the desert's gifts.",
+      'Sikkim': "India's largest large cardamom producer.",
+      'Goa': 'Goan cashew — the Konkan original.',
+      'Ladakh (UT)': "Apricots, seabuckthorn — the high desert's treasures.",
+      'Gujarat': 'Kachchhi kharek — semi-dried dates from Kutch.',
+      'Andhra Pradesh': 'Anantapur groundnuts, Madanapalle tamarind.',
+      'India (Andhra Pradesh & Odisha)': 'Araku Valley Arabica — Paris-award-winning tribal coffee.',
+      'Uttarakhand': 'Badri cow ghee, Himalayan nettle tea.',
+      'Assam': 'Karbi Anglong ginger, Assam supari.',
+      'Uttar Pradesh': 'Farrukhabad fulwa potato, Baruasagar adrak.',
+      'Chhattisgarh': 'Bastar forest tamarind.',
+      'Special': 'Befach Curated Specials — our own picks.'
+    };
+
+    const REGION_ORDER = ['North India', 'South India', 'East India', 'West India', 'Central India', 'Northeast India', 'Befach Curated'];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Group by region
+      const byRegion = {};
+      getAllStates().forEach(state => {
+        const region = (STATE_INFO[state] && STATE_INFO[state].region) || 'Other';
+        if (!byRegion[region]) byRegion[region] = [];
+        byRegion[region].push(state);
+      });
+
+      const container = document.getElementById('regionsContainer');
+      container.innerHTML = REGION_ORDER.filter(r => byRegion[r]).map(region => {
+        const states = byRegion[region];
+        return `
+          <div class="region-group">
+            <div class="region-header">
+              <h2>${region.replace('India', '<em>India</em>').replace('Befach Curated', '<em>Befach Curated</em>')}</h2>
+              <div class="region-line"></div>
+            </div>
+            <div class="state-grid-large">
+              ${states.map(state => {
+                const count = getProductsByState(state).length;
+                const cleanName = state.replace(' (UT)', '').replace('India (Andhra Pradesh & Odisha)', 'Araku (AP & Odisha)').replace('India (', '').replace(')', '');
+                return `
+                  <a href="shop.html?state=${encodeURIComponent(state)}" class="state-card-large">
+                    <h3>${cleanName}</h3>
+                    <p>${STATE_TAGLINES[state] || ''}</p>
+                    <span class="state-card-large-cta">
+                      ${count} ${count === 1 ? 'Product' : 'Products'} →
+                    </span>
+                  </a>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    });
+  </script>
+</body>
+</html>

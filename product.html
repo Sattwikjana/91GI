@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="pageTitle">Product | 91GI</title>
+  <meta id="metaDescription" name="description" content="Authentic GI-tagged heritage products of India, sourced direct from their region of origin. Origin-verified, farmer-direct, shipped pan-India by 91GI." />
+  <link rel="icon" type="image/png" href="91GI_logo.png" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body data-page="shop">
+
+  <div id="navMount"></div>
+
+  <div class="container">
+    <div class="breadcrumb" id="breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="shop.html">Shop</a>
+      <span class="breadcrumb-sep">/</span>
+      <span id="bcProduct">Product</span>
+    </div>
+
+    <article class="product-detail" id="productDetail">
+      <!-- populated by JS -->
+    </article>
+  </div>
+
+  <!-- STORY SECTION -->
+  <section class="story-section" id="storySection" style="display: none;">
+    <div class="container">
+      <div class="story-section-inner">
+        <span class="eyebrow">The Story</span>
+        <h2 id="storyHeading">The story behind this region</h2>
+        <div class="story-section-body" id="storyBody"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED PRODUCTS -->
+  <section class="section" id="relatedSection" style="display: none;">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">You might also love</span>
+        <h2 class="section-title">More from <em style="font-family: var(--font-display); font-style: italic; color: var(--vermillion); font-weight: 400;" id="relatedRegion">the region</em></h2>
+      </div>
+      <div class="product-grid" id="relatedGrid"></div>
+    </div>
+  </section>
+
+  <div id="footerMount"></div>
+
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get('id');
+      const product = getProductById(productId);
+
+      if (!product) {
+        document.getElementById('productDetail').innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 80px 0;">
+            <h2>Product not found</h2>
+            <p style="color: var(--mute); margin: 16px 0 24px;">The product you're looking for doesn't exist.</p>
+            <a href="shop.html" class="btn btn-primary">Back to Shop</a>
+          </div>
+        `;
+        return;
+      }
+
+      // Update page title + meta description per-product (SEO for product landing pages)
+      document.getElementById('pageTitle').textContent = `${product.name} — ${product.state} | 91GI`;
+      const metaDesc = document.getElementById('metaDescription');
+      if (metaDesc) metaDesc.setAttribute('content', `${product.name} from ${product.region}, ${product.state}. ${product.shortDesc}`);
+      document.getElementById('bcProduct').textContent = product.name;
+
+      const discount = product.mrp ? Math.round(((product.mrp - product.price) / product.mrp) * 100) : 0;
+
+      document.getElementById('productDetail').innerHTML = `
+        <div class="product-detail-gallery">
+          <div class="product-detail-image">
+            ${product.badge ? `<span class="product-badge ${product.badge.includes('Befach') ? 'red' : product.badge.includes('Premium') ? 'gold' : ''}" style="top:24px;left:24px;">${product.badge}</span>` : ''}
+            ${styledProductImage(product)}
+          </div>
+        </div>
+        <div class="product-detail-info">
+          <span class="eyebrow">${product.category} · ${product.state}</span>
+          <h1>${product.name}</h1>
+          <p class="tagline">${product.tagline}</p>
+
+          <div class="product-detail-meta">
+            <div class="product-meta-item">
+              <span class="product-meta-label">Origin</span>
+              <span class="product-meta-value">${product.region}</span>
+            </div>
+            <div class="product-meta-item">
+              <span class="product-meta-label">State</span>
+              <span class="product-meta-value">${product.state}</span>
+            </div>
+            <div class="product-meta-item">
+              <span class="product-meta-label">Pack</span>
+              <span class="product-meta-value">${product.unit}</span>
+            </div>
+          </div>
+
+          <p style="color: var(--mute); font-size: 16px; margin-bottom: 28px; line-height: 1.7;">
+            ${product.shortDesc}
+          </p>
+
+          <div class="product-detail-price">
+            <span class="price">₹${product.price.toLocaleString('en-IN')}</span>
+            ${product.mrp ? `<span class="price-mrp">₹${product.mrp.toLocaleString('en-IN')}</span>` : ''}
+            ${discount ? `<span class="price-discount">Save ${discount}%</span>` : ''}
+          </div>
+
+          <div class="qty-cart">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="changeQty(-1)" aria-label="Decrease">−</button>
+              <span class="qty-display" id="qtyDisplay">1</span>
+              <button class="qty-btn" onclick="changeQty(1)" aria-label="Increase">+</button>
+            </div>
+            <button class="btn-add-cart" id="addCartBtn" onclick="addToCart('${product.id}')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+              </svg>
+              Add to Basket
+            </button>
+          </div>
+
+          <div class="key-facts">
+            ${product.keyFacts.map(f => `<div class="key-fact">${f}</div>`).join('')}
+          </div>
+
+          <div style="display: flex; gap: 24px; font-size: 13px; color: var(--mute); flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--forest);">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/>
+                <path d="M20 8v6M23 11h-6"/>
+              </svg>
+              Direct from farmer
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--forest);">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              </svg>
+              Free shipping over ₹999
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--forest);">
+                <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              GI-origin verified
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Story section
+      if (product.story) {
+        document.getElementById('storySection').style.display = 'block';
+        document.getElementById('storyHeading').textContent = `The story of ${product.region}`;
+        document.getElementById('storyBody').innerHTML = product.story.split('\n').filter(Boolean).map(p => `<p>${p.trim()}</p>`).join('');
+      }
+
+      // Related products: same category, different product
+      const related = PRODUCTS.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+      if (related.length > 0) {
+        document.getElementById('relatedSection').style.display = 'block';
+        document.getElementById('relatedRegion').textContent = product.category;
+        renderProductGrid(related, '#relatedGrid');
+      }
+    });
+
+    let currentQty = 1;
+    function changeQty(delta) {
+      currentQty = Math.max(1, currentQty + delta);
+      document.getElementById('qtyDisplay').textContent = currentQty;
+    }
+
+    function addToCart(id) {
+      Cart.add(id, currentQty);
+      const btn = document.getElementById('addCartBtn');
+      btn.classList.add('added');
+      btn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Added to Basket
+      `;
+      setTimeout(() => {
+        btn.classList.remove('added');
+        btn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          Add to Basket
+        `;
+      }, 2000);
+      openCart();
+    }
+  </script>
+</body>
+</html>

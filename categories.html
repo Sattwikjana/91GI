@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Categories | 91GI</title>
+  <meta name="description" content="Browse 91GI's heritage GI products by category — rice, spices, coffee, makhana, nuts, and more." />
+  <link rel="icon" type="image/png" href="91GI_logo.png" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .cat-mega-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .cat-mega-card {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.5s var(--ease);
+    }
+    .cat-mega-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .cat-mega-card img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease);
+    }
+    .cat-mega-card:hover img { transform: scale(1.08); }
+    .cat-mega-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(15, 31, 23, 0) 30%, rgba(15, 31, 23, 0.85));
+      z-index: 1;
+    }
+    .cat-mega-content {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 28px;
+      color: white;
+      z-index: 2;
+    }
+    .cat-mega-content h3 {
+      color: white;
+      font-size: 28px;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .cat-mega-content p {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-bottom: 14px;
+      font-weight: 300;
+    }
+    .cat-mega-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      font-weight: 500;
+    }
+    @media (max-width: 900px) { .cat-mega-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .cat-mega-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body data-page="categories">
+
+  <div id="navMount"></div>
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Sixteen heritage categories</span>
+      <h1>Every <em>shelf</em> in India,<br />under one roof.</h1>
+      <p>From the rice bowls of Bengal to the saffron fields of Pampore — every category here is a doorway into a different India.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cat-mega-grid" id="categoriesGrid"></div>
+    </div>
+  </section>
+
+  <div id="footerMount"></div>
+
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    const CAT_DESC = {
+      'Rice': 'From Basmati to Gobindobhog — five heritage grains, five regions.',
+      'Wheat': "Madhya Pradesh's golden Sharbati — naturally sweet, rain-fed.",
+      'Millets & Pseudo-cereals': "Marathwada's drought-hardy jowars — heritage of dry land farming.",
+      'Pulses & Legumes': 'Seven heritage dals — from Gurez rajmash to Tandur redgram.',
+      'Turmeric (Haldi)': "The Lakadong league — turmeric with the world's highest curcumin.",
+      'Chilli (Dried Spice)': 'Kashmiri Long & Nandurbar — colour, heat, and Indian character.',
+      'Other Spices': 'Saffron, cardamom, pepper, jeera — ten aromatic treasures.',
+      'Nuts & Dry Fruits': 'From Goan cashews to Ladakhi apricots — eight origin nuts.',
+      'Coconut & Copra': "Tamil Nadu's heritage Pollachi Tall — slow-grown, oil-rich.",
+      'Oilseeds': 'Sesame, groundnuts — sun-ripened heritage seeds.',
+      'Coffee': "Araku, Chikmagalur, Coorg — India's three coffee crowns.",
+      'Tea': 'Wild-harvested Himalayan nettle — mountain medicine in a cup.',
+      'Makhana (Fox Nut)': "Mithila's hand-popped foxnut — GI-protected since 2022.",
+      'Medicinal & Herbal': "Nagori Ashwagandha & Ladakh's seabuckthorn — Ayurvedic power.",
+      'Onion, Garlic & Roots': "Lasalgaon onion to Karbi Anglong ginger — the kitchen's roots.",
+      'Processed / Other': "A2 Badri Ghee, Konkan kokum, Bastar tamarind — the rest of India's pantry."
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const categories = getAllCategories();
+      document.getElementById('categoriesGrid').innerHTML = categories.map(cat => {
+        const count = getProductsByCategory(cat).length;
+        const themeCls = CATEGORY_THEME[cat] || 'cat-spice';
+        return `
+          <a href="shop.html?category=${encodeURIComponent(cat)}" class="cat-mega-card">
+            <div class="styled-image ${themeCls}">
+              <div class="styled-image-content">
+                <svg class="styled-image-pin" viewBox="0 0 24 24" fill="currentColor" style="width: 40px; height: 40px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                <div class="styled-image-name" style="font-size: 32px;">${cat.split('(')[0].trim()}</div>
+              </div>
+            </div>
+            <div class="cat-mega-content">
+              <h3>${cat}</h3>
+              <p>${CAT_DESC[cat] || ''}</p>
+              <span class="cat-mega-cta">${count} ${count === 1 ? 'product' : 'products'} →</span>
+            </div>
+          </a>
+        `;
+      }).join('');
+    });
+  </script>
+</body>
+</html>
