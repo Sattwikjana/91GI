@@ -21,23 +21,28 @@ A premium e-commerce storefront for **India's Geographical Indication (GI) produ
 
 ## 🗂️ Project Structure
 
+Pages live in folders so every URL is clean (`/shop`, `/about`) with **no `.html`**:
+
 ```
 .
-├── index.html          # Home — hero, featured products, categories, story, states
-├── shop.html           # Shop all — filters, search, sort
-├── product.html        # Product detail — story, key facts, add-to-cart, related
-├── cart.html           # Full basket page
-├── checkout.html       # Checkout flow + order summary
-├── categories.html     # Browse by category
-├── states.html         # Browse by state (grouped by region)
-├── about.html          # The 91GI story / mission / what is GI
-├── 91GI_logo.png       # Brand logo
+├── index.html             # Home  →  /
+├── shop/index.html        # Shop all  →  /shop      (filters, search, sort)
+├── product/index.html     # Product detail  →  /product?id=…  (story, add-to-cart)
+├── cart/index.html        # Basket  →  /cart
+├── checkout/index.html    # Checkout  →  /checkout
+├── categories/index.html  # Browse by category  →  /categories
+├── states/index.html      # Browse by state  →  /states
+├── about/index.html       # The 91GI story  →  /about
+├── 91GI_logo.png          # Brand logo
 └── assets/
-    ├── css/style.css   # Full design system + components
+    ├── css/style.css      # Design system + components + page transitions
     └── js/
-        ├── products.js # 62-product catalog + stories + helpers
-        └── main.js     # Cart, nav/footer injection, animations
+        ├── products.js    # 62-product catalog + stories + helpers
+        └── main.js        # Cart, nav/footer injection, prefetch, animations
 ```
+
+**App-like navigation:** uses the [View Transitions API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API)
+for smooth cross-page fades plus speculative prefetch for instant loads — no framework, still a static site.
 
 ## 🚀 Run Locally
 

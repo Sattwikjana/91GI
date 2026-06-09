@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Checkout | 91GI</title>
-  <link rel="icon" type="image/png" href="91GI_logo.png" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" type="image/png" href="/91GI_logo.png" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body data-page="checkout">
 
@@ -162,14 +162,14 @@
         We've sent a confirmation to your email. Each product will be packed and shipped from its GI region —
         which means some orders ship in multiple parcels. We'll keep you updated at every step.
       </p>
-      <a href="index.html" class="btn btn-primary">Back to Home</a>
+      <a href="/" class="btn btn-primary">Back to Home</a>
     </div>
   </div>
 
   <div id="footerMount"></div>
 
-  <script src="assets/js/products.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="/assets/js/products.js"></script>
+  <script src="/assets/js/main.js"></script>
   <script>
     function selectPayment(el) {
       document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
@@ -185,7 +185,7 @@
         summary.innerHTML = `
           <h3>Your basket is empty</h3>
           <p style="color: var(--mute); margin: 12px 0 24px;">Add a product first.</p>
-          <a href="shop.html" class="btn btn-primary btn-block">Browse Products</a>
+          <a href="/shop/" class="btn btn-primary btn-block">Browse Products</a>
         `;
         document.getElementById('checkoutForm').style.display = 'none';
         return;
@@ -246,7 +246,7 @@
       Cart.clear();
       // Optional: redirect after a few seconds
       setTimeout(() => {
-        // window.location.href = 'index.html';
+        // window.location.href = '/';
       }, 5000);
     }
 

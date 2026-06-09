@@ -51,6 +51,44 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ============================================
+   SMOOTH CROSS-PAGE NAVIGATION
+   (View Transitions API — app-like page changes
+   instead of a hard white-flash reload)
+   ============================================ */
+@view-transition {
+  navigation: auto;
+}
+
+/* The body content gently lifts/fades; the chrome stays pinned */
+::view-transition-old(root) {
+  animation: vt-page-out 0.32s cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-new(root) {
+  animation: vt-page-in 0.46s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes vt-page-out {
+  to { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes vt-page-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Keep the banner, nav and footer fixed across the transition (no flicker) */
+.top-banner { view-transition-name: vt-banner; }
+.nav { view-transition-name: vt-nav; }
+.footer { view-transition-name: vt-footer; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 body {
   font-family: var(--font-sans);
   background: var(--cream);

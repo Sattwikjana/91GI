@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>91GI — Rooted in India. Respected Globally. | GI-Tagged Products</title>
   <meta name="description" content="Authentic GI-tagged products of India, sourced direct from origin. Kashmiri saffron, Mithila makhana, Lakadong turmeric, Araku coffee, Basmati rice & more." />
-  <link rel="icon" type="image/png" href="91GI_logo.png" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" type="image/png" href="/91GI_logo.png" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body data-page="home">
 
@@ -29,8 +29,8 @@
             that grow it. Sourced direct, sold honest, shipped pan-India.
           </p>
           <div class="hero-cta">
-            <a href="shop.html" class="btn btn-primary">Shop the Collection</a>
-            <a href="about.html" class="btn btn-ghost">Why GI Matters</a>
+            <a href="/shop/" class="btn btn-primary">Shop the Collection</a>
+            <a href="/about/" class="btn btn-ghost">Why GI Matters</a>
           </div>
         </div>
         <div class="hero-visual">
@@ -110,7 +110,7 @@
       </div>
       <div class="category-grid" id="homeCategoryGrid"></div>
       <div class="text-center mt-4">
-        <a href="categories.html" class="btn btn-ghost">View All Categories</a>
+        <a href="/categories/" class="btn btn-ghost">View All Categories</a>
       </div>
     </div>
   </section>
@@ -123,7 +123,7 @@
           <span class="eyebrow">Bestsellers</span>
           <h2 class="section-title">The<em style="font-family: var(--font-display); font-style: italic; color: var(--vermillion); font-weight: 400;"> first eight</em> you should taste</h2>
         </div>
-        <a href="shop.html" class="btn btn-ghost btn-sm">View All →</a>
+        <a href="/shop/" class="btn btn-ghost btn-sm">View All →</a>
       </div>
       <div class="product-grid" id="featuredGrid"></div>
     </div>
@@ -275,7 +275,7 @@
             blood sugar, generous to the senses. Rice for the elder told to give it up, for the young
             professional watching their numbers, for one family with many needs and one pot.
           </p>
-          <a href="product.html?id=befach-low-diabetic-rice" class="btn btn-primary">Discover Befach Rice</a>
+          <a href="/product/?id=befach-low-diabetic-rice" class="btn btn-primary">Discover Befach Rice</a>
         </div>
       </div>
     </div>
@@ -301,8 +301,8 @@
 
   <div id="footerMount"></div>
 
-  <script src="assets/js/products.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="/assets/js/products.js"></script>
+  <script src="/assets/js/main.js"></script>
   <script>
     const HOME_CATS = [
       { name: 'Rice', cls: 'cat-rice', count: 5, desc: 'Heritage Grains' },
@@ -321,7 +321,7 @@
       const homeCats = document.getElementById('homeCategoryGrid');
       if (homeCats) {
         homeCats.innerHTML = HOME_CATS.map(c => `
-          <a href="shop.html?category=${encodeURIComponent(c.name)}" class="category-card">
+          <a href="/shop/?category=${encodeURIComponent(c.name)}" class="category-card">
             <div class="styled-image ${c.cls}">
               <div class="styled-image-content">
                 <svg class="styled-image-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
@@ -346,7 +346,7 @@
         stateGrid.innerHTML = states.slice(0, 18).map(state => {
           const count = getProductsByState(state).length;
           return `
-            <a href="shop.html?state=${encodeURIComponent(state)}" class="state-tile">
+            <a href="/shop/?state=${encodeURIComponent(state)}" class="state-tile">
               <div class="state-tile-name">${state.replace(' (UT)', '').replace('India (', '').replace(')', '').replace('Andhra Pradesh & Odisha', 'Araku')}</div>
               <div class="state-tile-count">${count} ${count === 1 ? 'Product' : 'Products'}</div>
             </a>

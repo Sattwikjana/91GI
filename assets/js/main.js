@@ -139,7 +139,7 @@ function renderCartDrawer() {
           <path d="M16 10a4 4 0 0 1-8 0"/>
         </svg>
         <p>Your basket is empty</p>
-        <a href="shop.html" class="btn btn-primary btn-sm">Discover GI Products</a>
+        <a href="/shop/" class="btn btn-primary btn-sm">Discover GI Products</a>
       </div>
     `;
     if (footer) footer.style.display = 'none';
@@ -211,7 +211,7 @@ function navSearch() {
     el.focus();
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   } else {
-    window.location.href = 'shop.html';
+    window.location.href = '/shop/';
   }
 }
 
@@ -330,7 +330,7 @@ function styledProductImage(p, opts = {}) {
 function renderProductCard(p) {
   const discount = p.mrp ? Math.round(((p.mrp - p.price) / p.mrp) * 100) : 0;
   return `
-    <a href="product.html?id=${p.id}" class="product-card">
+    <a href="/product/?id=${p.id}" class="product-card">
       <div class="product-card-image">
         ${p.badge ? `<span class="product-badge ${p.badge.includes('Befach') ? 'red' : p.badge.includes('Premium') ? 'gold' : ''}">${p.badge}</span>` : ''}
         ${styledProductImage(p)}
@@ -396,15 +396,15 @@ function injectNav(activePage) {
     <nav class="nav">
       <div class="container">
         <div class="nav-inner">
-          <a href="index.html" class="nav-logo">
-            <img src="91GI_logo.png" alt="91GI — Rooted in India. Respected Globally.">
+          <a href="/" class="nav-logo">
+            <img src="/91GI_logo.png" alt="91GI — Rooted in India. Respected Globally.">
           </a>
           <div class="nav-links">
-            <a href="index.html" class="${activePage==='home'?'active':''}">Home</a>
-            <a href="shop.html" class="${activePage==='shop'?'active':''}">Shop All</a>
-            <a href="categories.html" class="${activePage==='categories'?'active':''}">Categories</a>
-            <a href="states.html" class="${activePage==='states'?'active':''}">By State</a>
-            <a href="about.html" class="${activePage==='about'?'active':''}">Our Story</a>
+            <a href="/" class="${activePage==='home'?'active':''}">Home</a>
+            <a href="/shop/" class="${activePage==='shop'?'active':''}">Shop All</a>
+            <a href="/categories/" class="${activePage==='categories'?'active':''}">Categories</a>
+            <a href="/states/" class="${activePage==='states'?'active':''}">By State</a>
+            <a href="/about/" class="${activePage==='about'?'active':''}">Our Story</a>
           </div>
           <div class="nav-actions">
             <button class="nav-icon-btn" onclick="navSearch()" aria-label="Search">
@@ -428,12 +428,12 @@ function injectNav(activePage) {
     </nav>
     <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
     <aside class="mobile-menu" id="mobileMenu">
-      <a href="index.html">Home</a>
-      <a href="shop.html">Shop All</a>
-      <a href="categories.html">Categories</a>
-      <a href="states.html">By State</a>
-      <a href="about.html">Our Story</a>
-      <a href="cart.html">Basket</a>
+      <a href="/">Home</a>
+      <a href="/shop/">Shop All</a>
+      <a href="/categories/">Categories</a>
+      <a href="/states/">By State</a>
+      <a href="/about/">Our Story</a>
+      <a href="/cart/">Basket</a>
     </aside>
   `;
 }
@@ -475,21 +475,21 @@ function injectFooter() {
           <div class="footer-col">
             <h4>Shop</h4>
             <ul>
-              <li><a href="shop.html">All Products</a></li>
-              <li><a href="categories.html">Categories</a></li>
-              <li><a href="states.html">By State</a></li>
-              <li><a href="shop.html?category=Rice">Rice</a></li>
-              <li><a href="shop.html?category=Other%20Spices">Spices</a></li>
-              <li><a href="shop.html?category=Coffee">Coffee</a></li>
+              <li><a href="/shop/">All Products</a></li>
+              <li><a href="/categories/">Categories</a></li>
+              <li><a href="/states/">By State</a></li>
+              <li><a href="/shop/?category=Rice">Rice</a></li>
+              <li><a href="/shop/?category=Other%20Spices">Spices</a></li>
+              <li><a href="/shop/?category=Coffee">Coffee</a></li>
             </ul>
           </div>
           <div class="footer-col">
             <h4>Company</h4>
             <ul>
-              <li><a href="about.html">Our Story</a></li>
-              <li><a href="about.html#mission">Mission</a></li>
-              <li><a href="about.html#farmers">Farmers</a></li>
-              <li><a href="about.html#gi">What is GI?</a></li>
+              <li><a href="/about/">Our Story</a></li>
+              <li><a href="/about/#mission">Mission</a></li>
+              <li><a href="/about/#farmers">Farmers</a></li>
+              <li><a href="/about/#gi">What is GI?</a></li>
             </ul>
           </div>
           <div class="footer-col">
@@ -530,12 +530,57 @@ function injectCartDrawer() {
         <div class="cart-totals"><span>Shipping</span><span id="cartShipping">Free</span></div>
         <div class="cart-totals grand"><span>Total</span><span id="cartTotal">₹0</span></div>
         <div class="cart-actions">
-          <a href="cart.html" class="btn btn-ghost btn-sm" style="flex:1;">View Basket</a>
-          <a href="checkout.html" class="btn btn-primary btn-sm" style="flex:1;">Checkout</a>
+          <a href="/cart/" class="btn btn-ghost btn-sm" style="flex:1;">View Basket</a>
+          <a href="/checkout/" class="btn btn-primary btn-sm" style="flex:1;">Checkout</a>
         </div>
       </div>
     </aside>
   `;
+}
+
+// ============================================
+// INSTANT NAVIGATION — speculative prefetch
+// Prefetches same-site pages on hover/pointer-down so they
+// open instantly. Gracefully ignored by unsupported browsers.
+// ============================================
+function initPrefetch() {
+  try {
+    if (typeof HTMLScriptElement !== 'undefined' &&
+        HTMLScriptElement.supports &&
+        HTMLScriptElement.supports('speculationrules')) {
+      const rules = {
+        prefetch: [{
+          source: 'document',
+          where: { href_matches: '/*' },
+          eagerness: 'moderate'
+        }]
+      };
+      const s = document.createElement('script');
+      s.type = 'speculationrules';
+      s.textContent = JSON.stringify(rules);
+      document.head.appendChild(s);
+      return;
+    }
+  } catch (e) { /* fall through to manual prefetch */ }
+
+  // Fallback: prefetch internal links on hover via <link rel="prefetch">
+  const prefetched = new Set();
+  const prefetch = (url) => {
+    if (prefetched.has(url)) return;
+    prefetched.add(url);
+    const l = document.createElement('link');
+    l.rel = 'prefetch';
+    l.href = url;
+    document.head.appendChild(l);
+  };
+  document.addEventListener('pointerover', (e) => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
+    if (a.target === '_blank') return;
+    prefetch(a.href);
+  }, { passive: true });
 }
 
 // ============================================
@@ -554,6 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavScroll();
   initReveal();
   initImageLoad();
+  initPrefetch();
 
   // Add reveal class to common elements (NOT .product-grid — it's too tall and would never trigger)
   document.querySelectorAll('.section-header, .category-grid, .state-grid, .features-strip, .about-grid').forEach(el => {

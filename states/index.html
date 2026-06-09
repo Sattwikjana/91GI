@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>By State | 91GI</title>
   <meta name="description" content="Browse GI-tagged products by Indian state — from Kashmir to Kanyakumari, every state's heritage in one place." />
-  <link rel="icon" type="image/png" href="91GI_logo.png" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" type="image/png" href="/91GI_logo.png" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
   <style>
     .region-group {
       margin-bottom: 60px;
@@ -114,8 +114,8 @@
 
   <div id="footerMount"></div>
 
-  <script src="assets/js/products.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="/assets/js/products.js"></script>
+  <script src="/assets/js/main.js"></script>
   <script>
     const STATE_TAGLINES = {
       'India (Punjab)': 'The basmati belt of the Indo-Gangetic plains.',
@@ -171,7 +171,7 @@
                 const count = getProductsByState(state).length;
                 const cleanName = state.replace(' (UT)', '').replace('India (Andhra Pradesh & Odisha)', 'Araku (AP & Odisha)').replace('India (', '').replace(')', '');
                 return `
-                  <a href="shop.html?state=${encodeURIComponent(state)}" class="state-card-large">
+                  <a href="/shop/?state=${encodeURIComponent(state)}" class="state-card-large">
                     <h3>${cleanName}</h3>
                     <p>${STATE_TAGLINES[state] || ''}</p>
                     <span class="state-card-large-cta">

@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Basket | 91GI</title>
-  <link rel="icon" type="image/png" href="91GI_logo.png" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" type="image/png" href="/91GI_logo.png" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
   <style>
     .full-cart-layout {
       display: grid;
@@ -88,8 +88,8 @@
 
   <div id="footerMount"></div>
 
-  <script src="assets/js/products.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="/assets/js/products.js"></script>
+  <script src="/assets/js/main.js"></script>
   <script>
     function renderFullCart() {
       const layout = document.getElementById('fullCartLayout');
@@ -105,7 +105,7 @@
             </svg>
             <h2 style="font-size: 28px; margin-bottom: 12px; font-weight: 500;">Your basket is empty</h2>
             <p style="color: var(--mute); margin-bottom: 28px; max-width: 360px; margin-left: auto; margin-right: auto;">Start with a small-batch heritage product — Kashmir saffron, Mithila makhana, or something from your home state.</p>
-            <a href="shop.html" class="btn btn-primary">Discover GI Products</a>
+            <a href="/shop/" class="btn btn-primary">Discover GI Products</a>
           </div>
         `;
         return;
@@ -124,7 +124,7 @@
                   ${styledProductImage(p)}
                 </div>
                 <div>
-                  <a href="product.html?id=${p.id}" style="color: inherit;">
+                  <a href="/product/?id=${p.id}" style="color: inherit;">
                     <div class="full-cart-item-name">${p.name}</div>
                   </a>
                   <div class="full-cart-item-region">${p.region} · ${p.state} · ${p.unit}</div>
@@ -168,8 +168,8 @@
               <span>₹${Cart.getTotal().toLocaleString('en-IN')}</span>
             </div>
           </div>
-          <a href="checkout.html" class="btn btn-primary btn-block" style="margin-top: 24px;">Proceed to Checkout →</a>
-          <a href="shop.html" class="btn btn-ghost btn-block" style="margin-top: 10px;">Continue Shopping</a>
+          <a href="/checkout/" class="btn btn-primary btn-block" style="margin-top: 24px;">Proceed to Checkout →</a>
+          <a href="/shop/" class="btn btn-ghost btn-block" style="margin-top: 10px;">Continue Shopping</a>
 
           <div style="margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 12px; color: var(--mute); line-height: 1.7;">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
