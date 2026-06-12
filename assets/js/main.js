@@ -405,6 +405,7 @@ function injectNav(activePage) {
             <a href="/categories/" class="${activePage==='categories'?'active':''}">Categories</a>
             <a href="/states/" class="${activePage==='states'?'active':''}">By State</a>
             <a href="/about/" class="${activePage==='about'?'active':''}">Our Story</a>
+            <a href="/landing/" class="${activePage==='landing'?'active':''}">Landing Page</a>
           </div>
           <div class="nav-actions">
             <button class="nav-icon-btn" onclick="navSearch()" aria-label="Search">
@@ -433,6 +434,7 @@ function injectNav(activePage) {
       <a href="/categories/">Categories</a>
       <a href="/states/">By State</a>
       <a href="/about/">Our Story</a>
+      <a href="/landing/">Landing Page</a>
       <a href="/cart/">Basket</a>
     </aside>
   `;
