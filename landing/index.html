@@ -55,9 +55,6 @@
         <a href="#basics">What is GI?</a>
         <a href="#why">Why GI</a>
         <a href="#products">Products</a>
-        <button type="button" class="nav__cta" id="navLike" aria-label="I love this mission">
-          <span class="nav__like-icon" aria-hidden="true">🤍</span> Contribute
-        </button>
       </nav>
     </div>
   </header>
@@ -247,11 +244,11 @@
   </main>
 
   <!-- Floating survey CTA — appears on scroll -->
-  <a href="#survey" class="survey-fab" id="surveyFab" aria-label="Take the Survey">
+  <div class="survey-fab" id="surveyFab">
     <span class="survey-fab__text">If You are Interested in GI - Tagged Products and Help Farmers Reach Pan India</span>
-    <span class="survey-fab__cta">Click Here <span class="survey-fab__arrow" aria-hidden="true">→</span></span>
-    <span class="survey-fab__love" id="missionLove" role="button" tabindex="0" aria-label="Love this mission">🤍</span>
-  </a>
+    <button type="button" class="survey-fab__cta" id="fabSupport">If you love this, support it <span class="survey-fab__arrow" aria-hidden="true">→</span></button>
+    <button type="button" class="survey-fab__love" id="missionLove" aria-label="Love and support this mission">🤍</button>
+  </div>
 
   <canvas class="confetti-canvas" id="confettiCanvas" aria-hidden="true"></canvas>
   <script src="script.js" defer></script>

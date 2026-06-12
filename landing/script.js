@@ -118,8 +118,11 @@
     updateInterestCounter();
   }
 
+  let liveHearts = 0;
+  const HEART_CAP = 320;                // pure safety ceiling — a human can't realistically hit this
   function burstHeart(el) {
     if (prefersReduced) return;
+    if (liveHearts >= HEART_CAP) return; // already a wall of hearts — let some clear first
     const r = el.getBoundingClientRect();
     const originX = r.left + r.width / 2;
     const originY = r.top + r.height / 2;
@@ -139,43 +142,41 @@
     setTimeout(() => { big.style.opacity = "0"; big.style.transform = "translate(-50%,-58%) scale(1.25)"; }, 550);
     setTimeout(() => big.remove(), 1150);
 
-    // 2) Hearts flood the WHOLE page — a burst from the button + a rain from all over the screen
+    // 2) A light burst from the button + a little rain — built in ONE batch
     const vw = window.innerWidth, vh = window.innerHeight;
-    const spawn = (startX, startY, dx, dy, dur) => {
+    const frag = document.createDocumentFragment();
+    const nodes = [];
+    let maxLife = 0;
+    const make = (startX, startY, dx, dy, dur) => {
       const s = document.createElement("span");
       s.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-      const size = 16 + Math.random() * 34;
+      const size = 16 + Math.random() * 30;
+      const delay = Math.random() * 0.25;            // CSS-driven stagger, not JS timers
       Object.assign(s.style, {
         position: "fixed", left: startX + "px", top: startY + "px",
         fontSize: size + "px", pointerEvents: "none", zIndex: 350, opacity: "1",
-        filter: "drop-shadow(0 4px 8px rgba(163,52,52,.25))",
-        transition: `transform ${dur}s cubic-bezier(.25,.6,.3,1), opacity ${dur}s ease`,
-        willChange: "transform, opacity",
+        transition: `transform ${dur}s cubic-bezier(.25,.6,.3,1) ${delay}s, opacity ${dur}s ease ${delay}s`,
       });
-      document.body.appendChild(s);
       const rot = (Math.random() - 0.5) * 120;
-      const delay = Math.random() * 350;
-      setTimeout(() => requestAnimationFrame(() => {
-        s.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg) scale(${0.7 + Math.random() * 1})`;
-        s.style.opacity = "0";
-      }), delay);
-      setTimeout(() => s.remove(), dur * 1000 + delay + 200);
+      s._to = `translate(${dx}px, ${dy}px) rotate(${rot}deg) scale(${0.7 + Math.random()})`;
+      frag.appendChild(s);
+      nodes.push(s);
+      maxLife = Math.max(maxLife, (dur + delay) * 1000);
     };
+    liveHearts += 12;                              // this burst spawns 12 below
 
-    // a) big fountain bursting out from the button
-    for (let i = 0; i < 45; i++) {
-      const dx = (Math.random() - 0.5) * vw * 1.1;
+    // fountain of hearts shooting up out of the pressed heart — light, so every press blows
+    for (let i = 0; i < 12; i++) {
+      const dx = (Math.random() - 0.5) * vw * 0.9;
       const dy = -(originY + 60) - Math.random() * vh * 0.4;
-      spawn(originX, originY, dx, dy, 1.4 + Math.random() * 0.7);
+      make(originX, originY, dx, dy, 1.2 + Math.random() * 0.6);
     }
-    // b) hearts rising from random points across the whole width of the page
-    for (let i = 0; i < 45; i++) {
-      const startX = Math.random() * vw;
-      const startY = vh + 20;
-      const dx = (Math.random() - 0.5) * 240;
-      const dy = -(vh + 80) - Math.random() * vh * 0.3;
-      spawn(startX, startY, dx, dy, 1.8 + Math.random() * 1);
-    }
+
+    document.body.appendChild(frag);               // single DOM insertion
+    requestAnimationFrame(() => requestAnimationFrame(() => {   // one frame kicks off all of them
+      nodes.forEach((s) => { s.style.transform = s._to; s.style.opacity = "0"; });
+    }));
+    setTimeout(() => { nodes.forEach((s) => s.remove()); liveHearts -= nodes.length; }, maxLife + 300);
   }
 
   // "Love our mission" — top-right nav button + floating banner heart stay in sync
@@ -190,24 +191,40 @@
     if (navLike) navLike.classList.add("is-loved");
   }
 
+  // a quick, cheap bounce on the pressed button — restarts cleanly on rapid presses
+  function popOnce(el) {
+    el.classList.remove("heart-pop");
+    void el.offsetWidth;     // force reflow so the animation can replay
+    el.classList.add("heart-pop");
+  }
+
+  // EVERY press blows hearts: red on the very first press, then a bounce + a fresh burst each time.
+  let loved = false;
+  function loveWithBurst(el) {
+    if (!loved) { loved = true; markLoved(); }  // first press paints it red, instantly
+    popOnce(el);
+    burstHeart(el);                             // light enough to fire on every single press
+  }
+
   if (missionLove) {
-    const loveIt = (e) => {
-      e.preventDefault();      // don't follow the banner link
-      e.stopPropagation();
-      markLoved();
-      burstHeart(missionLove);
+    missionLove.addEventListener("click", () => {
+      loveWithBurst(missionLove);
       logEvent("gi_mission_love", { event: "Mission Loved", source: "banner" });
-    };
-    missionLove.addEventListener("click", loveIt);
-    missionLove.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") loveIt(e);
+    });
+  }
+
+  // the "If you love this, support it" prompt blows hearts too — points people to the heart
+  const fabSupport = $("#fabSupport");
+  if (fabSupport && missionLove) {
+    fabSupport.addEventListener("click", () => {
+      loveWithBurst(missionLove);   // same action: red heart + burst, focused on the heart
+      logEvent("gi_mission_love", { event: "Mission Loved", source: "support-cta" });
     });
   }
 
   if (navLike) {
     navLike.addEventListener("click", () => {
-      markLoved();
-      burstHeart(navLike);
+      loveWithBurst(navLike);
       logEvent("gi_mission_love", { event: "Mission Loved", source: "nav" });
     });
   }
@@ -446,6 +463,8 @@
   ----------------------------------------------------------------- */
   $$('a[href^="#"]').forEach((a) => {
     a.addEventListener("click", (e) => {
+      // the love heart lives inside the survey-bar link — never scroll when it's tapped
+      if (e.defaultPrevented || e.target.closest("#missionLove")) return;
       const id = a.getAttribute("href");
       if (id === "#" || id.length < 2) return;
       const target = document.querySelector(id);
