@@ -109,18 +109,38 @@
       'Processed / Other': "A2 Badri Ghee, Konkan kokum, Bastar tamarind — the rest of India's pantry."
     };
 
+    // Representative product photo for each category.
+    const CAT_IMAGE = {
+      'Rice': '/91GI_Images/Basmati.png',
+      'Wheat': '/91GI_Images/Sharbati_Gehu.png',
+      'Millets & Pseudo-cereals': '/91GI_Images/Dagdi_Jowar_of_Jalna.png',
+      'Pulses & Legumes': '/91GI_Images/Gurez_Rajmash_of_Kashmir.png',
+      'Turmeric (Haldi)': '/91GI_Images/Lakadong_Turmeric.png',
+      'Chilli (Dried Spice)': '/91GI_Images/Kashmiri_Long_Chilli.png',
+      'Other Spices': '/91GI_Images/Kashmir_Saffron.png',
+      'Nuts & Dry Fruits': '/91GI_Images/Goa_Cashew_(Kaju_Or_Caju).png',
+      'Coconut & Copra': '/91GI_Images/Pollachi_Tall_Coconut.png',
+      'Oilseeds': '/91GI_Images/Jagtial_Sesame_of_Telangana.png',
+      'Coffee': '/91GI_Images/Araku_Valley_Arabica_Coffee.png',
+      'Tea': '/91GI_Images/Himalayan_Nettle_Tea.png',
+      'Makhana (Fox Nut)': '/91GI_Images/Mithila_Makhana.png',
+      'Medicinal & Herbal': '/91GI_Images/Nagori_Ashwagandha.png',
+      'Onion, Garlic & Roots': '/91GI_Images/Lasalgaon_Onion.png',
+      'Processed / Other': '/91GI_Images/Uttarakhand_Badri_Cow_Ghee.png'
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
       const categories = getAllCategories();
       document.getElementById('categoriesGrid').innerHTML = categories.map(cat => {
         const count = getProductsByCategory(cat).length;
         const themeCls = CATEGORY_THEME[cat] || 'cat-spice';
+        // Use the curated photo, else fall back to the first product image in the category.
+        const firstWithImg = getProductsByCategory(cat).find(p => p.image);
+        const img = CAT_IMAGE[cat] ? encodeURI(CAT_IMAGE[cat]) : (firstWithImg ? firstWithImg.image : '');
         return `
           <a href="/shop/?category=${encodeURIComponent(cat)}" class="cat-mega-card">
             <div class="styled-image ${themeCls}">
-              <div class="styled-image-content">
-                <svg class="styled-image-pin" viewBox="0 0 24 24" fill="currentColor" style="width: 40px; height: 40px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-                <div class="styled-image-name" style="font-size: 32px;">${cat.split('(')[0].trim()}</div>
-              </div>
+              ${img ? `<img class="styled-image-photo" src="${img}" alt="${cat}" loading="lazy" />` : ''}
             </div>
             <div class="cat-mega-content">
               <h3>${cat}</h3>

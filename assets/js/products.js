@@ -1289,6 +1289,79 @@ const PRODUCTS = [
   }
 ];
 
+// ── Local product photos (91GI_Images/) mapped to each product by id ──
+// Filenames are kept exactly as they appear on disk.
+const PRODUCT_IMAGE_FILES = {
+  'befach-low-diabetic-rice': 'Low_Diabetic_Rice.png',
+  'basmati-rice': 'Basmati.png',
+  'seeraga-samba': 'Seeraga_Samba_Rice.png',
+  'ambemohar-rice': 'Ambemohar_Rice.png',
+  'gobindobhog-rice': 'Gobindobhog_Rice.png',
+  'sharbati-gehu': 'Sharbati_Gehu.png',
+  'dagdi-jowar-jalna': 'Dagdi_Jowar_of_Jalna.png',
+  'mangalwedha-jowar': 'Mangalwedha_Jowar.png',
+  'gurez-rajmash': 'Gurez_Rajmash_of_Kashmir.png',
+  'thalanadan-grambu': 'Thalanadan_Grambu_(Clove).png',
+  'amravati-chana': 'Amravati_Chana.png',
+  'borsuri-tur-dal': 'Borsuri_Tur_Dal.png',
+  'gulbarga-tur-dal': 'Gulbarga_Tur_Dal.png',
+  'mokama-masoor': 'Mokama_Masoor.png',
+  'tandur-redgram': 'Tandur_Redgram.png',
+  'lakadong-turmeric': 'Lakadong_Turmeric.png',
+  'armoor-turmeric': 'Armoor_Turmeric.png',
+  'kandhamal-haladi': 'Kandhamal_Haladi.png',
+  'kashmiri-long-chilli': 'Kashmiri_Long_Chilli.png',
+  'nandurbar-mirchi': 'Nandurbar_Mirchi.png',
+  'kashmir-saffron': 'Kashmir_Saffron.png',
+  'arunachal-bebo': 'Arunachal_Bebo_(Large_Cardamom).png',
+  'himachali-kala-zeera': 'Himachali_Kala_Zeera.png',
+  'kanniyakumari-clove': 'Kanniyakumari_Clove.png',
+  'kasti-coriander': 'Kasti_Coriander.png',
+  'kolli-hills-pepper': 'Kolli_Hills_Pepper.png',
+  'pollachi-nutmeg': 'Pollachi_Nutmeg.png',
+  'rajasthan-jeera': 'Rajasthan_Jeera.png',
+  'rani-pepper': 'Rani_Pepper.png',
+  'sikkim-large-cardamom': 'Sikkim_Large_Cardamom.png',
+  'goa-cashew': 'Goa_Cashew_(Kaju_Or_Caju).png',
+  'jammu-kashmir-walnut': 'Jammu_Kashmir_Walnut.png',
+  'ladakh-apricot': 'Ladakh_Apricot_&_Apricot_Nut.png',
+  'sangli-raisins': 'Sangli_Raisins.png',
+  'kachchhi-kharek': 'Kachchhi_Kharek.png',
+  'kishtwar-chilgoga': 'Kishtwar_Chilgoga_(Pine_Nuts)_Of_Jammu.png',
+  'kishtwar-hazlenuts': 'Kishtwar_Hazlenuts.png',
+  'pangi-ki-thangi': 'Pangi_Ki_Thangi.png',
+  'pollachi-tall-coconut': 'Pollachi_Tall_Coconut.png',
+  'jagtial-sesame': 'Jagtial_Sesame_of_Telangana.png',
+  'onattukara-ellu': 'Onattukara_Ellu.png',
+  'ananthapuramu-groundnuts': 'Ananthapuramu_Groundnuts.png',
+  'araku-valley-coffee': 'Araku_Valley_Arabica_Coffee.png',
+  'chikmagalur-coffee': 'Chikmagalur_Arabica_Coffee.png',
+  'coorg-coffee': 'Coorg_Arabica_Coffee.png',
+  'himalayan-nettle-tea': 'Himalayan_Nettle_Tea.png',
+  'mithila-makhana': 'Mithila_Makhana.png',
+  'ladakh-seabuckthorn': 'Ladakh_Seabuckthorn.png',
+  'nagori-ashwagandha': 'Nagori_Ashwagandha.png',
+  'himalayan-snow-garlic': 'Himalayan_Garlic_-_Snow_Mountain_Garlic.png',
+  'lasalgaon-onion': 'Lasalgaon_Onion.png',
+  'karbi-anglong-ginger': 'Assam_Karbi_Anglong_Ginger.png',
+  'baruasagar-adrak': 'Baruasagar_Adrak_(Ginger).png',
+  'chettikulam-small-onion': 'Chettikulam_Small_Onion.png',
+  'farrukhabad-fulwa-aloo': 'Farrukhabad_Fulwa_Aloo.png',
+  'sikar-pyaj': 'Sikar_Pyaj.png',
+  'assam-supari': 'Assam_Supari.png',
+  'bastar-tamarind': 'Bastar_Tamarind.png',
+  'madanapalle-tamarind': 'Madanapalle_Tamarind.png',
+  'sindhudurg-ratnagiri-kokum': 'Sindhudurg_&_Ratnagiri_Kokum.png',
+  'sirsi-supari': 'Sirsi_Supari.png',
+  'badri-cow-ghee': 'Uttarakhand_Badri_Cow_Ghee.png'
+};
+
+PRODUCTS.forEach(p => {
+  const file = PRODUCT_IMAGE_FILES[p.id];
+  // encodeURI keeps the path readable while escaping any unsafe characters.
+  p.image = file ? encodeURI('/91GI_Images/' + file) : null;
+});
+
 // Helper functions
 function getProductById(id) {
   return PRODUCTS.find(p => p.id === id);

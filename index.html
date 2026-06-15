@@ -35,16 +35,7 @@
         </div>
         <div class="hero-visual">
           <div class="hero-visual-frame">
-          <div class="styled-image cat-chilli" style="background: linear-gradient(160deg, #C1272D 0%, #6E0E12 50%, #2A0506 100%);">
-            <div class="styled-image-content" style="opacity: 0.4; transform: translateY(-30px);">
-              <svg class="styled-image-pin" viewBox="0 0 24 24" fill="currentColor" style="width: 64px; height: 64px;">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/>
-              </svg>
-              <div class="styled-image-region" style="font-size: 12px;">PAMPORE · KASHMIR</div>
-              <div class="styled-image-divider" style="width: 60px;"></div>
-              <div class="styled-image-name" style="font-size: 42px;">Kashmir Saffron</div>
-            </div>
-          </div>
+          <img src="/91GI_Images/Kashmir_Saffron.png" alt="Kashmir Saffron" />
           <div class="hero-visual-card">
             <span class="eyebrow">Pampore, Kashmir</span>
             <h3>Kashmir Saffron</h3>
@@ -250,16 +241,7 @@
     <div class="container">
       <div class="story-block-grid" style="grid-template-columns: 1fr 1.1fr;">
         <div class="story-block-visual reveal" style="aspect-ratio: 1/1.2;">
-          <div class="styled-image cat-special" style="background: linear-gradient(150deg, #1B4332 0%, #0E2A1E 60%, #C1272D 100%);">
-            <div class="styled-image-content">
-              <svg class="styled-image-pin" viewBox="0 0 24 24" fill="currentColor" style="width: 52px; height: 52px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-              <div class="styled-image-region" style="color: var(--gold-soft);">BEFACH SPECIAL</div>
-              <div class="styled-image-divider" style="background: var(--gold-soft); width: 50px;"></div>
-              <div class="styled-image-name" style="font-size: 40px;">Low Diabetic</div>
-              <div class="styled-image-name" style="font-size: 40px; color: var(--gold-soft);">Rice</div>
-            </div>
-            <div class="styled-image-tag">91GI · Befach Family</div>
-          </div>
+          <img src="/91GI_Images/Low_Diabetic_Rice.png" alt="Befach Low Diabetic Rice" />
         </div>
         <div class="reveal delay-1">
           <span class="eyebrow" style="color: var(--vermillion);">Befach Special · From the 91GI Family</span>
@@ -305,14 +287,14 @@
   <script src="/assets/js/main.js"></script>
   <script>
     const HOME_CATS = [
-      { name: 'Rice', cls: 'cat-rice', count: 5, desc: 'Heritage Grains' },
-      { name: 'Other Spices', display: 'Spices', cls: 'cat-spice', count: 10, desc: 'Aromatic Treasures' },
-      { name: 'Coffee', cls: 'cat-coffee', count: 3, desc: 'Hill-Grown Arabicas' },
-      { name: 'Nuts & Dry Fruits', cls: 'cat-nuts', count: 8, desc: 'Origin Varieties' },
-      { name: 'Turmeric (Haldi)', display: 'Turmeric', cls: 'cat-turmeric', count: 3, desc: 'Healing Roots' },
-      { name: 'Pulses & Legumes', cls: 'cat-pulse', count: 7, desc: 'Heritage Dals' },
-      { name: 'Makhana (Fox Nut)', display: 'Makhana', cls: 'cat-makhana', count: 1, desc: "Mithila's Hand-Popped" },
-      { name: 'Processed / Other', display: 'Ghee & Other', cls: 'cat-processed', count: 6, desc: 'A2 Bilona & More' }
+      { name: 'Rice', cls: 'cat-rice', count: 5, desc: 'Heritage Grains', img: '/91GI_Images/Basmati.png' },
+      { name: 'Other Spices', display: 'Spices', cls: 'cat-spice', count: 10, desc: 'Aromatic Treasures', img: '/91GI_Images/Kashmir_Saffron.png' },
+      { name: 'Coffee', cls: 'cat-coffee', count: 3, desc: 'Hill-Grown Arabicas', img: '/91GI_Images/Araku_Valley_Arabica_Coffee.png' },
+      { name: 'Nuts & Dry Fruits', cls: 'cat-nuts', count: 8, desc: 'Origin Varieties', img: '/91GI_Images/Goa_Cashew_(Kaju_Or_Caju).png' },
+      { name: 'Turmeric (Haldi)', display: 'Turmeric', cls: 'cat-turmeric', count: 3, desc: 'Healing Roots', img: '/91GI_Images/Lakadong_Turmeric.png' },
+      { name: 'Pulses & Legumes', cls: 'cat-pulse', count: 7, desc: 'Heritage Dals', img: '/91GI_Images/Gurez_Rajmash_of_Kashmir.png' },
+      { name: 'Makhana (Fox Nut)', display: 'Makhana', cls: 'cat-makhana', count: 1, desc: "Mithila's Hand-Popped", img: '/91GI_Images/Mithila_Makhana.png' },
+      { name: 'Processed / Other', display: 'Ghee & Other', cls: 'cat-processed', count: 6, desc: 'A2 Bilona & More', img: '/91GI_Images/Uttarakhand_Badri_Cow_Ghee.png' }
     ];
 
     // Render featured products
@@ -323,10 +305,7 @@
         homeCats.innerHTML = HOME_CATS.map(c => `
           <a href="/shop/?category=${encodeURIComponent(c.name)}" class="category-card">
             <div class="styled-image ${c.cls}">
-              <div class="styled-image-content">
-                <svg class="styled-image-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-                <div class="styled-image-name">${c.display || c.name}</div>
-              </div>
+              <img class="styled-image-photo" src="${encodeURI(c.img)}" alt="${c.display || c.name}" loading="lazy" />
             </div>
             <div class="category-card-content">
               <h3>${c.display || c.name}</h3>

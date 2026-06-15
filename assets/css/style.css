@@ -2187,6 +2187,16 @@ textarea.form-input { min-height: 100px; resize: vertical; }
   overflow: hidden;
 }
 
+/* Real product photo — fills the styled-image box without altering its size */
+.styled-image-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
 .styled-image::before {
   content: '';
   position: absolute;
