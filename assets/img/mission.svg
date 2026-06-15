@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" role="img" aria-label="91GI mission — from the soil. Terraced Indian fields beneath a saffron sun, anchored by an origin pin.">
+  <defs>
+    <!-- Forest gradient matching the storefront palette -->
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#2D5A45"/>
+      <stop offset="0.55" stop-color="#1B4332"/>
+      <stop offset="1" stop-color="#0E2A1E"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#F4D58A"/>
+      <stop offset="0.45" stop-color="#D4AF6F"/>
+      <stop offset="1" stop-color="#B8893B"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#E89B2F" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#E89B2F" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hillFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#143526"/>
+      <stop offset="1" stop-color="#0B2117"/>
+    </linearGradient>
+    <linearGradient id="hillMid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1F4733"/>
+      <stop offset="1" stop-color="#163827"/>
+    </linearGradient>
+    <linearGradient id="hillBack" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2A5640"/>
+      <stop offset="1" stop-color="#214733"/>
+    </linearGradient>
+    <linearGradient id="pin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D4AF6F"/>
+      <stop offset="1" stop-color="#B8893B"/>
+    </linearGradient>
+    <pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#FAF6EE" fill-opacity="0.08"/>
+    </pattern>
+    <clipPath id="frame"><rect x="0" y="0" width="1000" height="1000" rx="0"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <!-- Base -->
+    <rect width="1000" height="1000" fill="url(#bg)"/>
+    <rect width="1000" height="1000" fill="url(#dots)"/>
+    <!-- soft light from upper-left, shadow lower-right (matches .styled-image::before) -->
+    <rect width="1000" height="1000" fill="url(#glow)" opacity="0.5"/>
+
+    <!-- Saffron / turmeric sun -->
+    <circle cx="500" cy="372" r="250" fill="url(#glow)"/>
+    <circle cx="500" cy="372" r="118" fill="url(#sun)"/>
+    <circle cx="500" cy="372" r="118" fill="none" stroke="#FAF6EE" stroke-opacity="0.18" stroke-width="2"/>
+
+    <!-- Flight of returning birds -->
+    <g fill="none" stroke="#FAF6EE" stroke-opacity="0.32" stroke-width="3" stroke-linecap="round">
+      <path d="M250 250 q14 -12 28 0 q14 -12 28 0"/>
+      <path d="M690 300 q11 -10 22 0 q11 -10 22 0"/>
+      <path d="M745 235 q9 -8 18 0 q9 -8 18 0"/>
+    </g>
+
+    <!-- Terraced hills (back to front) -->
+    <path d="M0 560 C 220 500 360 520 520 545 C 700 573 840 540 1000 565 L1000 1000 L0 1000 Z" fill="url(#hillBack)"/>
+    <path d="M0 645 C 200 600 380 640 560 635 C 760 629 880 660 1000 640 L1000 1000 L0 1000 Z" fill="url(#hillMid)"/>
+    <path d="M0 745 C 230 705 430 760 640 745 C 820 732 920 760 1000 748 L1000 1000 L0 1000 Z" fill="url(#hillFront)"/>
+
+    <!-- Terrace contour lines (the worked land) -->
+    <g fill="none" stroke="#FAF6EE" stroke-opacity="0.10" stroke-width="2">
+      <path d="M40 690 C 250 655 430 700 700 685"/>
+      <path d="M60 808 C 300 770 520 820 980 800"/>
+      <path d="M0 872 C 280 838 560 882 1000 862"/>
+    </g>
+
+    <!-- Sprout rising from the soil -->
+    <g stroke="#D4AF6F" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.9">
+      <path d="M188 900 C 188 850 188 815 188 788"/>
+      <path d="M188 828 C 162 818 146 798 148 772 C 174 774 190 798 188 824 Z" fill="#2A5640" stroke-opacity="0.7"/>
+      <path d="M188 808 C 214 798 230 778 228 752 C 202 754 186 778 188 804 Z" fill="#2A5640" stroke-opacity="0.7"/>
+    </g>
+    <g stroke="#D4AF6F" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.7">
+      <path d="M832 905 C 832 866 832 840 832 818"/>
+      <path d="M832 852 C 812 844 800 828 802 808 C 822 810 834 828 832 850 Z" fill="#2A5640" stroke-opacity="0.7"/>
+    </g>
+
+    <!-- Origin pin: the heart of the mission -->
+    <g transform="translate(500 470)">
+      <ellipse cx="0" cy="232" rx="58" ry="14" fill="#000000" opacity="0.22"/>
+      <path d="M0 -8
+               C -62 -8 -112 42 -112 104
+               C -112 188 0 312 0 312
+               C 0 312 112 188 112 104
+               C 112 42 62 -8 0 -8 Z" fill="url(#pin)"/>
+      <path d="M0 -8
+               C -62 -8 -112 42 -112 104
+               C -112 188 0 312 0 312
+               C 0 312 112 188 112 104
+               C 112 42 62 -8 0 -8 Z" fill="none" stroke="#FAF6EE" stroke-opacity="0.25" stroke-width="2"/>
+      <circle cx="0" cy="100" r="42" fill="#0E2A1E"/>
+      <!-- grain of rice inside the pin: protected origin -->
+      <ellipse cx="0" cy="100" rx="11" ry="26" fill="#D4AF6F" transform="rotate(20 0 100)"/>
+    </g>
+  </g>
+</svg>

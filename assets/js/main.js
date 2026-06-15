@@ -151,15 +151,10 @@ function renderCartDrawer() {
   itemsContainer.innerHTML = items.map(item => {
     const p = getProductById(item.id);
     if (!p) return '';
-    const theme = p.badge && p.badge.includes('Befach') ? 'cat-special' : (CATEGORY_THEME[p.category] || 'cat-spice');
     return `
       <div class="cart-item">
         <div class="cart-item-img">
-          <div class="styled-image ${theme}" style="padding: 8px;">
-            <div class="styled-image-content">
-              <svg class="styled-image-pin" viewBox="0 0 24 24" fill="currentColor" style="width: 16px; height: 16px; margin: 0;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-            </div>
-          </div>
+          ${styledProductImage(p)}
         </div>
         <div class="cart-item-details">
           <div class="cart-item-name">${p.name}</div>
@@ -312,6 +307,15 @@ const CATEGORY_THEME = {
 function styledProductImage(p, opts = {}) {
   const theme = p.badge && p.badge.includes('Befach') ? 'cat-special' : (CATEGORY_THEME[p.category] || 'cat-spice');
   const cleanState = (p.state || '').replace(' (UT)', '').replace('India (Andhra Pradesh & Odisha)', 'Araku').replace('India (', '').replace(')', '');
+  // When a real product photo exists, show it filling the container (the
+  // gradient stays behind as a fallback while the image loads or if it fails).
+  if (p.image) {
+    return `
+      <div class="styled-image ${theme}">
+        <img class="styled-image-photo" src="${p.image}" alt="${p.name}" loading="lazy" />
+      </div>
+    `;
+  }
   return `
     <div class="styled-image ${theme}">
       <div class="styled-image-content">
