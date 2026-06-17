@@ -447,17 +447,37 @@ input.is-invalid { border-color: #d9534f; box-shadow: 0 0 0 4px rgba(217,83,79,.
   .hero__trust { gap: 20px 26px; margin-top: 30px; }
   .hero__trust strong { font-size: 1.5rem; }
 
-  /* hero floating cards — smaller, cleanly staggered, not clipped */
-  .hero__visual { height: 318px; transform: none; margin-top: 16px; }
-  .float-card { width: 160px; padding: 10px; border-radius: 16px; }
-  .float-card__img { height: 98px; border-radius: 11px; }
+  /* hero cards — clean 2x2 grid (3 cards + GI seal), no overlap */
+  .hero__visual {
+    height: auto;
+    transform: none;
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: stretch;
+  }
+  .float-card {
+    position: static;
+    width: auto;
+    padding: 10px;
+    border-radius: 16px;
+    animation: none;
+    transform: none;
+  }
+  .float-card__img { height: 108px; border-radius: 11px; }
   .float-card__img span { font-size: 1.95rem; }
-  .float-card figcaption { font-size: .8rem; padding: 9px 4px 2px; }
-  .float-card--a { top: 0; right: 2px; }
-  .float-card--b { top: 114px; left: 0; }
-  .float-card--c { bottom: 0; right: 24px; }
-  .hero__seal { width: 72px; height: 72px; top: 44%; border-width: 2px; }
-  .hero__seal strong { font-size: 1.1rem; }
+  .float-card figcaption { font-size: .82rem; padding: 9px 4px 2px; }
+  .hero__seal {
+    position: static;
+    transform: none;
+    width: 100px;
+    height: 100px;
+    border-width: 2px;
+    align-self: center;
+    justify-self: center;
+  }
+  .hero__seal strong { font-size: 1.2rem; }
 
   /* compact product cards so 2-up reads cleanly */
   .pcard__emoji { font-size: 2.3rem; }
@@ -487,11 +507,10 @@ input.is-invalid { border-color: #d9534f; box-shadow: 0 0 0 4px rgba(217,83,79,.
   .ticker__track span { padding: 0 18px; font-size: .73rem; }
 }
 
-/* very small phones — single-column products, trimmed hero */
+/* very small phones — trimmed hero */
 @media (max-width: 380px) {
   .hero__title { font-size: 1.92rem; }
-  .float-card { width: 148px; }
-  .float-card--c { right: 16px; }
+  .hero__visual { gap: 10px; }
 }
 
 [hidden] { display: none !important; }
