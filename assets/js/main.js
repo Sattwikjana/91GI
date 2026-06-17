@@ -507,10 +507,19 @@ function injectFooter() {
               <li><a href="mailto:hello@91gi.com">Contact</a></li>
             </ul>
           </div>
+          <div class="footer-col">
+            <h4>Policy</h4>
+            <ul>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Use</a></li>
+              <li><a href="#">Security</a></li>
+              <li><a href="#">Sitemap</a></li>
+            </ul>
+          </div>
         </div>
         <div class="footer-bottom">
           <span>© ${new Date().getFullYear()} 91GI. All rights reserved.</span>
-          <span><a href="#">Privacy</a> · <a href="#">Terms</a> · 91GI.com</span>
+          <span><a href="/about/">About</a> · <a href="#">Privacy</a> · <a href="#">Terms</a> · 91GI.com</span>
         </div>
       </div>
     </footer>

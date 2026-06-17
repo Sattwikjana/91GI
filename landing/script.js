@@ -355,6 +355,23 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
+  /* mobile hamburger menu */
+  const navToggle = $("#navToggle");
+  const navLinks = $("#navLinks");
+  if (navToggle && navLinks) {
+    const setMenu = (open) => {
+      navToggle.classList.toggle("is-open", open);
+      navLinks.classList.toggle("is-open", open);
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      navToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    };
+    navToggle.addEventListener("click", () => setMenu(!navLinks.classList.contains("is-open")));
+    navLinks.addEventListener("click", (e) => { if (e.target.closest("a")) setMenu(false); });
+    document.addEventListener("click", (e) => {
+      if (navLinks.classList.contains("is-open") && !e.target.closest(".nav__inner")) setMenu(false);
+    });
+  }
+
   const reveals = $$("[data-reveal]");
   if ("IntersectionObserver" in window && !prefersReduced) {
     // auto-stagger: elements sharing a parent cascade in one after another
