@@ -10,6 +10,11 @@
   const app = $("#app");
   const CFG_KEY = "gi_admin_cfg";
 
+  /* ===== ADMIN PASSWORD =====  change this to whatever you like.
+     Tip: when you set up the Google Sheet, use the SAME value as ADMIN_KEY
+     so it's all one password. */
+  const ADMIN_PASSWORD = "Befach@91GI";
+
   let cfg = load();
   let mode = cfg ? "live" : null;     // "live" | "local"
   let timer = null;
@@ -205,6 +210,36 @@
     return d.toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
   }
 
+  /* ---------------- login gate ---------------- */
+  function renderLogin(err) {
+    showControls(false);
+    app.innerHTML = `
+      <div class="setup">
+        <h1>Admin login</h1>
+        <p>Enter the admin password to open the dashboard.</p>
+        <label for="pw">Password</label>
+        <input id="pw" type="password" placeholder="••••••••" autocomplete="current-password" />
+        <div class="err" id="loginErr">${esc(err || "")}</div>
+        <div class="row"><button class="btn" id="enter">Unlock</button></div>
+      </div>`;
+    const go = () => {
+      if ($("#pw").value === ADMIN_PASSWORD) {
+        try { sessionStorage.setItem("gi_admin_ok", "1"); } catch (_) {}
+        afterLogin();
+      } else { renderLogin("Wrong password — try again."); }
+    };
+    $("#enter").addEventListener("click", go);
+    $("#pw").addEventListener("keydown", (e) => { if (e.key === "Enter") go(); });
+    $("#pw").focus();
+  }
+
+  function afterLogin() {
+    if (cfg && cfg.url) { mode = "live"; showControls(true); refresh(); }
+    else { mode = "local"; showControls(true); render(localStats()); }
+  }
+
   /* ---------------- boot ---------------- */
-  if (cfg) { showControls(true); refresh(); } else { renderSetup(); }
+  let unlocked = false;
+  try { unlocked = sessionStorage.getItem("gi_admin_ok") === "1"; } catch (_) {}
+  if (unlocked) afterLogin(); else renderLogin();
 })();
