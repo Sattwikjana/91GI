@@ -4,42 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- SEO -->
-  <title>91 GI — India's Rarest Foods, Protected by Law</title>
-  <meta name="description" content="GI-certified ingredients from 29 Indian states — saffron, turmeric, rice, spices and more. Tell us which authentic origin-certified foods excite you before we launch." />
-  <meta name="keywords" content="GI tag, Geographical Indication, Kashmir Saffron, Lakdong Turmeric, Govind Bhog Rice, authentic Indian food, origin certified, 91 GI, Befach" />
-  <meta name="author" content="Befach 4X Pvt. Ltd." />
-  <meta name="theme-color" content="#a33434" />
-
-  <!-- Open Graph -->
+  <title>91 GI — Would you buy India's rarest foods?</title>
+  <meta name="description" content="A 20-second gut check: India's GI-certified foods, sourced from origin. Tap the ones you'd actually buy. We're deciding whether to launch." />
+  <meta name="theme-color" content="#2C4A2E" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="India's Rarest Foods — Protected by Law, Grown by Farmers" />
-  <meta property="og:description" content="GI-certified ingredients from 29 Indian states. These are not just products. The land is part of the recipe." />
-  <meta property="og:site_name" content="91 GI" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <link rel="canonical" href="https://91gi.in/" />
+  <meta property="og:title" content="Would you buy India's rarest foods?" />
+  <meta property="og:description" content="GI-certified, from the exact soil they belong to. Tell us what you'd buy." />
+  <link rel="canonical" href="https://91gi.in/landing/" />
   <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="apple-touch-icon" href="favicon.png" />
 
-  <!-- Fonts -->
+  <!-- Fonts: Fraunces (display) + Hanken Grotesk (text) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- Structured data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "91 GI",
-    "description": "Authentic Geographical Indication (GI) certified ingredients from across India.",
-    "url": "https://91gi.in",
-    "parentOrganization": { "@type": "Organization", "name": "Befach 4X Pvt. Ltd." }
-  }
-  </script>
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -48,221 +28,90 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "x9d6ggo5fd");
   </script>
+
+  <!-- ===== Meta Pixel =====  Replace BOTH "YOUR_PIXEL_ID" with your real Pixel ID. -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'YOUR_PIXEL_ID');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" alt=""
+    src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+  <!-- ===== End Meta Pixel ===== -->
 </head>
 <body>
-  <!-- Scroll progress bar -->
-  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
-
-  <!-- ===== NAV ===== -->
-  <header class="nav" id="nav">
-    <div class="container nav__inner">
-      <a href="#hero" class="brand" aria-label="91 GI — Rooted in India, Respected Globally">
-        <img src="logo.png" alt="91 GI" class="brand__logo" width="560" height="311" />
-      </a>
-      <nav class="nav__links" id="navLinks" aria-label="Primary">
-        <a href="/">Home</a>
-        <a href="#basics">What is GI?</a>
-        <a href="#why">Why GI</a>
-        <a href="#products">Products</a>
-      </nav>
-      <button class="nav__toggle" id="navToggle" type="button" aria-label="Open menu" aria-controls="navLinks" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <img src="logo.png" alt="91 GI" class="topbar__logo" />
+      <span class="topbar__tag">Pre-launch · we're testing an idea</span>
     </div>
   </header>
 
   <main>
-    <!-- ===== 1. HERO ===== -->
-    <section class="hero" id="hero">
-      <div class="hero__bg" aria-hidden="true">
-        <span class="orb orb--1"></span>
-        <span class="orb orb--2"></span>
-        <span class="orb orb--3"></span>
-      </div>
+    <!-- HERO -->
+    <section class="hero">
+      <p class="kicker reveal">India · Geographical Indication foods</p>
+      <h1 class="hero__title reveal">Would you buy<br><em>India's rarest foods?</em></h1>
+      <p class="hero__sub reveal">From the exact soil they legally belong to. Tap the heart on the ones you'd buy — that's the whole survey.</p>
+      <p class="trust reveal">Government GI-certified · Direct from the farmers</p>
+    </section>
 
-      <div class="container hero__grid">
-        <div class="hero__copy">
-          <span class="eyebrow reveal" data-reveal>🇮🇳 GI-Certified · 29 Indian States</span>
-          <h1 class="hero__title reveal" data-reveal>
-            India's Rarest Foods — <span class="text-saffron">Protected by Law</span>, Grown by Farmers, Delivered to You
-          </h1>
-          <p class="hero__sub reveal" data-reveal>
-            GI-certified ingredients from 29 Indian states. These are not just products.
-            The land is part of the recipe.
-          </p>
-          <div class="hero__actions reveal" data-reveal>
-            <a href="#products" class="btn btn--primary btn--lg">Show Me the Products</a>
-            <a href="#basics" class="btn btn--ghost btn--lg">What is a GI Tag?</a>
-          </div>
-          <ul class="hero__trust reveal" data-reveal>
-            <li><strong>635+</strong> GI products in India</li>
-            <li><strong>29</strong> states represented</li>
-            <li><strong>0</strong> middlemen</li>
-          </ul>
-        </div>
-
-        <!-- Floating product cards -->
-        <div class="hero__visual" data-parallax-root>
-          <figure class="float-card float-card--a" data-parallax="0.10">
-            <div class="float-card__img" style="--g1:#f0a93c;--g2:#b3460f"><img src="videos/saffron.jpeg" alt="Kashmir Saffron" loading="lazy"></div>
-            <figcaption><span class="gi-badge">GI · Kashmir</span>Kashmir Saffron</figcaption>
-          </figure>
-          <figure class="float-card float-card--b" data-parallax="0.20">
-            <div class="float-card__img" style="--g1:#e0a72b;--g2:#8a5a12"><img src="videos/turmeric.jpeg" alt="Lakdong Turmeric" loading="lazy"></div>
-            <figcaption><span class="gi-badge">GI · Meghalaya</span>Lakdong Turmeric</figcaption>
-          </figure>
-          <figure class="float-card float-card--c" data-parallax="0.06">
-            <div class="float-card__img" style="--g1:#e8d9b0;--g2:#b89a5e"><img src="videos/Bhog-Rice.jpeg" alt="Diabetic Friendly Rice" loading="lazy"></div>
-            <figcaption><span class="gi-badge">GI · Telangana</span>Diabetic Friendly Rice</figcaption>
-          </figure>
-          <div class="hero__seal" aria-hidden="true">
-            <span>CERTIFIED</span><strong>GI</strong><span>ORIGIN</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ticker -->
-      <div class="ticker" aria-hidden="true">
-        <div class="ticker__track" id="tickerTrack"><!-- injected --></div>
+    <!-- PRODUCT PICKS -->
+    <section class="picks">
+      <div class="wrap">
+        <div class="picks__grid" id="grid"><!-- product cards injected by script.js --></div>
+        <p class="picks__count" id="count" aria-live="polite">Tap the ones you'd buy.</p>
       </div>
     </section>
 
-    <!-- ===== 2. WHAT IS A GI TAG? ===== -->
-    <section class="section basics" id="basics">
-      <div class="container">
-        <header class="section__head reveal" data-reveal>
-          <span class="eyebrow">The Basics</span>
-          <h2>What is a GI Tag? Explained in 2 Minutes.</h2>
-        </header>
-
-        <div class="basics__copy reveal" data-reveal>
-          <p>A <strong>Geographical Indication tag — GI tag —</strong> is India's official government stamp
-            that says: this product can <strong>ONLY</strong> come from this specific place, made by the
-            people of that region, using their traditional methods. No imitation allowed. By law.</p>
+    <!-- THE DECISION -->
+    <section class="decide" id="decide">
+      <div class="wrap" id="decideMain">
+        <h2 class="decide__q reveal">Would you buy these if they were authentic and fairly priced?</h2>
+        <p class="decide__hint reveal">One honest tap — that's all we need.</p>
+        <div class="decide__contact reveal">
+          <input type="text" id="contact" name="contact" autocomplete="tel"
+            placeholder="WhatsApp or email for launch updates (optional)" />
         </div>
-
-        <!-- comparison -->
-        <div class="compare reveal" data-reveal="rise">
-          <div class="compare__row compare__row--head" role="row">
-            <span>World Example</span>
-            <span>Indian GI Example</span>
-            <span>What It Means</span>
-          </div>
-          <div class="compare__row">
-            <span data-label="World"><strong>Champagne</strong> can only come from Champagne, France. Everything else is sparkling wine.</span>
-            <span data-label="India"><strong>Kashmir Saffron</strong> can only come from Pampore, Kashmir.</span>
-            <span data-label="Meaning">The geography makes the product. No other place can produce the same thing.</span>
-          </div>
-          <div class="compare__row">
-            <span data-label="World"><strong>Parmesan</strong> can only come from Parma, Italy — by law.</span>
-            <span data-label="India"><strong>Lakdong Turmeric</strong> can only come from Meghalaya's Jaintia Hills.</span>
-            <span data-label="Meaning">The flavour, nutrition, and quality come from the soil itself.</span>
-          </div>
-          <div class="compare__row">
-            <span data-label="World"><strong>Scotch Whisky</strong> must be distilled and aged in Scotland.</span>
-            <span data-label="India"><strong>Govind Bhog Rice</strong> can only come from West Bengal's Hooghly district.</span>
-            <span data-label="Meaning">When you buy it with a GI tag, you are buying the real thing. Always.</span>
-          </div>
+        <div class="decide__btns reveal">
+          <button class="vbtn vbtn--yes" type="button" data-verdict="yes">Yes — I'd buy</button>
+          <button class="vbtn vbtn--no" type="button" data-verdict="no">Not for me</button>
         </div>
+        <p class="reassure reveal">No payment · no sign-up · 20 seconds — just your honest opinion.</p>
+      </div>
 
-        <p class="basics__close reveal" data-reveal="scale">
-          India has <strong>635+ GI-tagged products.</strong> Most Indians have never heard of them.
-          That is the problem we are fixing.
-        </p>
+      <!-- success -->
+      <div class="wrap done" id="done" hidden>
+        <div class="done__check" aria-hidden="true">
+          <svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="24"/><path d="M17 29 l7 7 l15 -17"/></svg>
+        </div>
+        <h2 id="doneTitle">Thank you — that's exactly what we needed.</h2>
+        <p class="done__sub">Your answer helps decide whether 91 GI launches.</p>
       </div>
     </section>
-
-    <!-- ===== 3. WHY GI? / PATRIOTISM ===== -->
-    <section class="section why" id="why">
-      <div class="container">
-        <header class="section__head section__head--wide reveal" data-reveal>
-          <span class="eyebrow eyebrow--gold">The India Angle</span>
-          <h2 class="why__title">India Grew the World's Greatest Ingredients.<br>It's Time Indians Knew That.</h2>
-        </header>
-
-        <div class="why__copy reveal" data-reveal>
-          <p>Before India became a market for imported flavours, this land grew everything. Saffron from
-            Kashmir that Europeans called <em>red gold</em>. Turmeric from Meghalaya that healed before
-            modern medicine existed. Pepper from the Kolli Hills that funded trade routes across three
-            continents. Rice from Bengal that fed empires. Spices from Kerala that brought the world to our shores.</p>
-          <p>None of that went away. The farmers are still there. The soil is still producing. But most of
-            what you are buying in the supermarket is an imitation — same name, different origin, different
-            quality, and your money going somewhere else entirely.</p>
-        </div>
-
-        <div class="grid why__cards">
-          <article class="reason reveal" data-reveal="left">
-            <span class="reason__no">01</span>
-            <h3>The Flavour Is Genuinely Different</h3>
-            <p>Lakdong Turmeric has 7–12% curcumin. Regular turmeric has 2–3%. That is not a brand claim —
-              it is soil science. The geography <em>is</em> the quality. You can taste the difference.</p>
-          </article>
-          <article class="reason reveal" data-reveal>
-            <span class="reason__no">02</span>
-            <h3>You Are Getting the Real Thing</h3>
-            <p>90% of "Kashmiri Saffron" sold online is Iranian or Spanish. With a GI-certified product, the
-              law ensures it's genuine. No substitution. No adulteration. No guesswork.</p>
-          </article>
-          <article class="reason reveal" data-reveal="right">
-            <span class="reason__no">03</span>
-            <h3>Your Rupee Reaches the Farmer</h3>
-            <p>Every GI product is sourced direct from the origin farming community. No mandi markup. No
-              middleman. The farmer earns fairly. You get it fresher. India's agricultural heritage stays alive.</p>
-          </article>
-        </div>
-
-        <blockquote class="why__quote reveal" data-reveal="scale">
-          "Knowing where your food comes from is not a luxury. For a country with 635 GI-tagged products,
-          it is the least we owe our farmers."
-        </blockquote>
-
-        <!-- stat bar -->
-        <div class="statbar reveal" data-reveal>
-          <div class="statbar__item">
-            <span class="statbar__num" data-count="635" data-suffix="+">0</span>
-            <span class="statbar__label">GI Products in India</span>
-          </div>
-          <div class="statbar__item">
-            <span class="statbar__num" data-count="29">0</span>
-            <span class="statbar__label">Indian States Represented</span>
-          </div>
-          <div class="statbar__item">
-            <span class="statbar__num statbar__num--text">Centuries</span>
-            <span class="statbar__label">of Farming Tradition</span>
-          </div>
-          <div class="statbar__item">
-            <span class="statbar__num" data-count="0">0</span>
-            <span class="statbar__label">Middlemen Between Farmer &amp; You</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== 4. PRODUCT GRID ===== -->
-    <section class="section products" id="products">
-      <div class="container">
-        <header class="section__head reveal" data-reveal>
-          <span class="eyebrow">The Collection</span>
-          <h2>Protected Indian Ingredients — GI-Certified, Origin-Verified</h2>
-          <p>Each one from a specific district in India. Each one irreplaceable. Tell us which ones
-            excite you most in the <strong>survey below</strong> — it only takes 60 seconds.</p>
-        </header>
-
-        <div class="grid products__grid" id="productGrid"><!-- injected by JS --></div>
-        <p class="products__counter reveal" data-reveal id="interestCounter" aria-live="polite"></p>
-      </div>
-    </section>
-
   </main>
 
-  <!-- Floating survey CTA — appears on scroll -->
-  <div class="survey-fab" id="surveyFab">
-    <span class="survey-fab__text">If You are Interested in GI - Tagged Products and Help Farmers Reach Pan India</span>
-    <button type="button" class="survey-fab__cta" id="fabSupport">If you love this, support it <span class="survey-fab__arrow" aria-hidden="true">→</span></button>
-    <button type="button" class="survey-fab__love" id="missionLove" aria-label="Love and support this mission">🤍</button>
+  <footer class="foot">
+    <div class="wrap">
+      <p class="foot__brand">91 GI</p>
+      <p class="foot__legal">
+        A Befach 4X Pvt. Ltd. initiative · This is a pre-launch demand test — no purchase, no payment.
+        We only use a contact you choose to share to tell you when we launch.
+        <a href="mailto:hello@91gi.in">hello@91gi.in</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- sticky CTA: keeps the finish action one tap away on long scrolls -->
+  <div class="cta-bar" id="ctaBar">
+    <span class="cta-bar__count" id="ctaCount">Tap what you'd buy</span>
+    <button class="cta-bar__btn" id="ctaBtn" type="button">Finish →</button>
   </div>
 
-  <canvas class="confetti-canvas" id="confettiCanvas" aria-hidden="true"></canvas>
   <script src="script.js" defer></script>
 </body>
 </html>
