@@ -24,7 +24,7 @@
  * removing the sendToBackend(likePing) line in script.js.
  */
 
-const ADMIN_KEY       = "change-this-91gi-key";   // <-- set your own secret
+const ADMIN_KEY       = "Befach@91GI";   // <-- same as your admin dashboard password
 const SHEET_RESPONSES = "Responses";
 const SHEET_LIKES     = "Likes";
 
