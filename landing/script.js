@@ -12,7 +12,7 @@
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---- CONFIG: where responses go (see survey-backend.gs) ---- */
-  const SURVEY_ENDPOINT = "";
+  const SURVEY_ENDPOINT = "https://script.google.com/macros/s/AKfycbwV7IKYhKv8UTjEKc7WwYFsfF1B55xSsRYy-cGJGNh53Vr62i3Wh-cS-VszpUZN8jlI/exec";
 
   /* a stable per-visitor id so the dashboard can count unique people */
   const SESSION = (() => {

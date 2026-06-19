@@ -9,11 +9,12 @@
   const $ = (s) => document.querySelector(s);
   const app = $("#app");
   const CFG_KEY = "gi_admin_cfg";
+  const SKEY = "gi_admin_key";
 
-  /* ===== ADMIN PASSWORD =====  change this to whatever you like.
-     Tip: when you set up the Google Sheet, use the SAME value as ADMIN_KEY
-     so it's all one password. */
-  const ADMIN_PASSWORD = "Befach@91GI";
+  /* ===== BACKEND =====  your Google Apps Script Web App URL (the Sheet).
+     The password is the ADMIN_KEY from survey-backend.gs, verified by the
+     server — it is never stored in this file. */
+  const BACKEND_URL = "https://script.google.com/macros/s/AKfycbwV7IKYhKv8UTjEKc7WwYFsfF1B55xSsRYy-cGJGNh53Vr62i3Wh-cS-VszpUZN8jlI/exec";
 
   let cfg = load();
   let mode = cfg ? "live" : null;     // "live" | "local"
@@ -80,7 +81,7 @@
     }
   }
   $("#refresh").addEventListener("click", refresh);
-  $("#settings").addEventListener("click", () => { stopAuto(); renderSetup(); showControls(false); });
+  $("#settings").addEventListener("click", () => { try { sessionStorage.removeItem(SKEY); } catch (_) {} stopAuto(); renderLogin(); });
   $("#auto").addEventListener("change", (e) => e.target.checked ? startAuto() : stopAuto());
   function startAuto() { stopAuto(); timer = setInterval(refresh, 30000); }
   function stopAuto() { if (timer) clearInterval(timer); timer = null; }
@@ -210,7 +211,7 @@
     return d.toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
   }
 
-  /* ---------------- login gate ---------------- */
+  /* ---------------- login (verified by the backend) ---------------- */
   function renderLogin(err) {
     showControls(false);
     app.innerHTML = `
@@ -223,23 +224,27 @@
         <div class="row"><button class="btn" id="enter">Unlock</button></div>
       </div>`;
     const go = () => {
-      if ($("#pw").value === ADMIN_PASSWORD) {
-        try { sessionStorage.setItem("gi_admin_ok", "1"); } catch (_) {}
-        afterLogin();
-      } else { renderLogin("Wrong password — try again."); }
+      const pw = $("#pw").value.trim();
+      if (!pw) return;
+      $("#loginErr").textContent = "Checking…";
+      fetchLive(BACKEND_URL, pw).then((d) => {
+        if (d && d.ok) {
+          try { sessionStorage.setItem(SKEY, pw); } catch (_) {}
+          cfg = { url: BACKEND_URL, key: pw }; mode = "live";
+          showControls(true); render(d);
+        } else {
+          renderLogin((d && d.error) || "Wrong password — try again.");
+        }
+      }).catch((e) => renderLogin(e.message || "Couldn't reach the dashboard."));
     };
     $("#enter").addEventListener("click", go);
     $("#pw").addEventListener("keydown", (e) => { if (e.key === "Enter") go(); });
     $("#pw").focus();
   }
 
-  function afterLogin() {
-    if (cfg && cfg.url) { mode = "live"; showControls(true); refresh(); }
-    else { mode = "local"; showControls(true); render(localStats()); }
-  }
-
   /* ---------------- boot ---------------- */
-  let unlocked = false;
-  try { unlocked = sessionStorage.getItem("gi_admin_ok") === "1"; } catch (_) {}
-  if (unlocked) afterLogin(); else renderLogin();
+  let savedKey = null;
+  try { savedKey = sessionStorage.getItem(SKEY); } catch (_) {}
+  if (savedKey) { cfg = { url: BACKEND_URL, key: savedKey }; mode = "live"; showControls(true); refresh(); }
+  else renderLogin();
 })();
